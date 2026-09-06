@@ -7,13 +7,14 @@ const {
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const navItems = [
-  ['inicio', 'Inicio', base],
-  ['curso', 'Curso', `${base}curso/`],
-  ['clases', 'Clases', `${base}clases/`],
-  ['evaluaciones', 'Evaluaciones', `${base}evaluaciones/`],
-  ['penaflor', 'Proyecto Peñaflor', `${base}proyecto-penaflor/`],
-  ['recursos', 'Recursos', `${base}recursos/`],
+  ['inicio', 'Inicio', base, '01'],
+  ['curso', 'Curso', `${base}curso/`, '02'],
+  ['clases', 'Clases', `${base}clases/`, '03'],
+  ['evaluaciones', 'Evaluaciones', `${base}evaluaciones/`, '04'],
+  ['penaflor', 'Proyecto Peñaflor', `${base}proyecto-penaflor/`, '05'],
+  ['recursos', 'Recursos', `${base}recursos/`, '06'],
 ];
+const currentLabel = navItems.find(([id]) => id === active)?.[1] || 'Inicio';
 ---
 <!doctype html>
 <html lang="es">
@@ -21,28 +22,63 @@ const navItems = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0c6164" />
+    <meta name="theme-color" content="#143f43" />
     <title>{title}</title>
   </head>
   <body>
-    <header class="topbar">
-      <div class="shell nav">
-        <a class="brand" href={base} aria-label="Ir al inicio">
-          <small>Ingeniería Civil en Ambiente · USACH</small>
-          <strong>Teoría de Sistemas</strong>
+    <div class="app-shell">
+      <aside class="app-sidebar" aria-label="Navegación del curso">
+        <a class="sidebar-brand" href={base} aria-label="Ir al inicio">
+          <span class="brand-mark">TS</span>
+          <span>
+            <small>Ingeniería Civil en Ambiente</small>
+            <strong>Teoría de Sistemas</strong>
+          </span>
         </a>
-        <nav class="navlinks" aria-label="Navegación principal">
-          {navItems.map(([id,label,href]) => (
-            <a class:list={[active === id && 'active']} href={href}>{label}</a>
+
+        <div class="sidebar-meta">
+          <span class="meta-label">SEMESTRE</span>
+          <strong>2026 · 2</strong>
+          <small>Universidad de Santiago de Chile</small>
+        </div>
+
+        <nav class="side-nav">
+          {navItems.map(([id,label,href,num]) => (
+            <a class:list={['side-link', active === id && 'active']} href={href}>
+              <span class="side-num">{num}</span>
+              <span>{label}</span>
+            </a>
           ))}
         </nav>
-        <span class="moodle-link" title="El enlace al Campus Virtual se configurará en la siguiente etapa">Campus Virtual ↗</span>
+
+        <div class="sidebar-footer">
+          <div class="semester-progress">
+            <div class="progress-copy"><span>Ruta del semestre</span><strong>01 / 07</strong></div>
+            <div class="progress-track"><span></span></div>
+          </div>
+          <span class="sidebar-note">Repositorio académico · v0.3</span>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <header class="utilitybar">
+          <div>
+            <span class="utility-eyebrow">Repositorio del curso</span>
+            <strong>{currentLabel}</strong>
+          </div>
+          <div class="utility-actions">
+            <span class="status-pill"><i></i> 2026-2</span>
+            <span class="moodle-link" title="El enlace al Campus Virtual se configurará en la siguiente etapa">Campus Virtual ↗</span>
+          </div>
+        </header>
+
+        <slot />
+
+        <footer class="footer">
+          <span>Teoría de Sistemas · Ingeniería Civil en Ambiente</span>
+          <span>Universidad de Santiago de Chile</span>
+        </footer>
       </div>
-    </header>
-    <slot />
-    <footer class="shell footer">
-      <span>Repositorio del curso · versión 2026-2</span>
-      <span>Universidad de Santiago de Chile · Ingeniería Civil en Ambiente</span>
-    </footer>
+    </div>
   </body>
 </html>
