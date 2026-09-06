@@ -1,10 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const phases = [
-  ['H0','Comprender el desafío','Reconocer qué está documentado, qué estamos interpretando y qué necesitamos validar.'],
-  ['H1','Contrastar la problematización','Revisar con la contraparte municipal la situación-problema, actores, sistema pertinente y primeras hipótesis.'],
-  ['H2','Contrastar el modelo','Poner a prueba la representación de transformación, arquitectura, información, regulación y dinámica.'],
-  ['H3','Presentar la hoja de ruta','Integrar diagnóstico, prioridades, secuencia, responsables, indicadores y recomendaciones.'],
+import { projectMilestones } from '../data/course';
+const base = import.meta.env.BASE_URL;
+const layers = [
+  ['01','Articulación semántica','Qué significa cada acción y si EHL y PACCC utilizan conceptos compatibles.'],
+  ['02','Articulación instrumental','Cómo se relacionan objetivos, medidas, proyectos, indicadores y mecanismos de seguimiento.'],
+  ['03','Facultades y roles','Quién puede decidir, ejecutar, coordinar, fiscalizar, financiar o apoyar.'],
+  ['04','Capacidades','Qué recursos, conocimientos, procesos, datos y apoyos requiere la implementación.'],
+  ['05','Dependencias y secuencia','Qué condiciones habilitan otras acciones y qué debe ocurrir primero.'],
+  ['06','Gobernanza y seguimiento','Cómo circulará la información, se tomarán decisiones y se corregirán desviaciones.'],
+];
+const teams = [
+  ['A','Gestión, selección y priorización','Cartera EHL · criterios · dependencias · prioridades'],
+  ['B','Coordinación institucional y capacidades','Roles · facultades · capacidades · restricciones'],
+  ['C','Información, seguimiento y articulación','Datos · indicadores · decisiones · EHL–PACCC'],
 ];
 ---
 <BaseLayout active="penaflor" title="Proyecto Peñaflor · Teoría de Sistemas">
@@ -12,38 +21,60 @@ const phases = [
     <section class="hero compact">
       <div class="eyebrow">Proyecto vinculado</div>
       <h1>Municipalidad de Peñaflor</h1>
-      <p class="lead">Un desafío auténtico para aplicar pensamiento sistémico a la implementación y articulación de instrumentos de gestión hídrica y cambio climático.</p>
+      <p class="lead">Un espacio de aplicación auténtica para transformar conocimiento sistémico en una propuesta profesional de implementación.</p>
     </section>
 
     <section class="section">
-      <article class="card prose-card project">
-        <div class="card-kicker">Pregunta orientadora</div>
-        <h2 style="font-size:clamp(1.8rem,3vw,2.7rem);margin-top:12px;">¿Cómo transformar la EHL y su relación con el PACCC en una hoja de ruta implementable, coherente con las facultades, capacidades, procesos, información, restricciones y relaciones reales de la Municipalidad de Peñaflor?</h2>
+      <article class="card project-question">
+        <div class="card-kicker">PREGUNTA ORIENTADORA</div>
+        <h2>¿Cómo transformar la EHL y su relación con el PACCC en una hoja de ruta implementable, coherente con las facultades, capacidades, procesos, información, restricciones y relaciones reales de la Municipalidad de Peñaflor?</h2>
+        <div class="tags"><span class="tag">EHL</span><span class="tag">PACCC</span><span class="tag">implementabilidad</span><span class="tag">hoja de ruta</span></div>
       </article>
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Seis capas de análisis</h2><p>La hoja de ruta no se reduce a ordenar proyectos: requiere comprender cómo una acción escrita puede transformarse en acción municipal realizable.</p></div>
+      <div class="section-title"><h2>Arquitectura del desafío</h2><p>La hoja de ruta no se reduce a ordenar proyectos: requiere comprender la cadena que conecta una acción escrita con una acción municipal realizable.</p></div>
       <div class="grid-3">
-        <article class="card phase"><h3>1 · Articulación semántica</h3><p>Qué significa cada acción y si EHL y PACCC utilizan conceptos compatibles.</p></article>
-        <article class="card phase"><h3>2 · Articulación instrumental</h3><p>Cómo se relacionan objetivos, medidas, proyectos, indicadores y mecanismos de seguimiento.</p></article>
-        <article class="card phase"><h3>3 · Facultades y roles</h3><p>Quién puede decidir, ejecutar, coordinar, fiscalizar, financiar o apoyar.</p></article>
-        <article class="card phase"><h3>4 · Capacidades</h3><p>Qué recursos, conocimientos, procesos, datos y apoyos requiere la implementación.</p></article>
-        <article class="card phase"><h3>5 · Dependencias y secuencia</h3><p>Qué condiciones habilitan otras acciones y qué debe ocurrir primero.</p></article>
-        <article class="card phase"><h3>6 · Gobernanza y seguimiento</h3><p>Cómo circulará la información, se tomarán decisiones y se corregirán desviaciones.</p></article>
+        {layers.map(([num,title,desc]) => <article class="card phase"><div class="card-kicker">CAPA {num}</div><h3>{title}</h3><p>{desc}</p></article>)}
       </div>
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Hitos de trabajo con la contraparte</h2><span class="card-kicker">Proceso iterativo</span></div>
-      <div class="grid-2">
-        {phases.map(([code,title,desc]) => <article class="card phase"><div class="card-kicker">{code}</div><h3>{title}</h3><p>{desc}</p></article>)}
+      <div class="section-title"><h2>Tres equipos, un producto</h2><p>Los equipos profundizan componentes diferentes del mismo problema y luego integran sus hallazgos en una única hoja de ruta.</p></div>
+      <div class="grid-3">
+        {teams.map(([code,title,desc]) => <article class="card team-card"><span class="team-code">{code}</span><h3>{title}</h3><p>{desc}</p></article>)}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Hitos con la contraparte</h2><span class="card-kicker">PROCESO ITERATIVO</span></div>
+      <div class="project-timeline">
+        {projectMilestones.map((item, index) => (
+          <article class="card milestone-card">
+            <div class="milestone-index">{String(index + 1).padStart(2,'0')}</div>
+            <div>
+              <div class="card-kicker">{item.code} · {item.date}</div>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+            <span class="badge">Planificado</span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section project-workflow">
+      <div class="section-title"><h2>Flujo de trabajo</h2><span class="card-kicker">MISMA LÓGICA PARA LOS TRES EQUIPOS</span></div>
+      <div class="workflow-line">
+        <span>Evidencia</span><i>→</i><span>Interpretación</span><i>→</i><span>Mecanismo</span><i>→</i><span>Brecha</span><i>→</i><span>Intervención</span><i>→</i><span>Prioridad</span><i>→</i><span>Hoja de ruta</span>
       </div>
     </section>
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Equipos complementarios</h2><p><strong>A.</strong> Gestión, selección y priorización de la cartera EHL.</p><p><strong>B.</strong> Coordinación institucional y capacidades municipales.</p><p><strong>C.</strong> Información, seguimiento y articulación EHL–PACCC.</p></article>
-      <article class="card prose-card"><h2>Herramientas comunes</h2><div class="tags"><span class="tag">Rich Picture</span><span class="tag">Crosswalk EHL–PACCC</span><span class="tag">CATWOE / TAPCID</span><span class="tag">Caja negra</span><span class="tag">Matriz maestra</span><span class="tag">Diagnóstico sistémico</span></div><p>Los tres equipos utilizan la misma arquitectura conceptual y luego integran sus hallazgos en un único producto municipal.</p></article>
+      <article class="card prose-card"><h2>Herramientas comunes</h2><div class="tags"><span class="tag">Rich Picture</span><span class="tag">Crosswalk EHL–PACCC</span><span class="tag">CATWOE / TAPCID</span><span class="tag">Caja negra</span><span class="tag">Matriz maestra</span><span class="tag">Diagnóstico sistémico</span></div><p>El repositorio funciona como puerta de entrada a estas herramientas. Sus archivos se incorporarán posteriormente sin cambiar la arquitectura.</p></article>
+      <article class="card prose-card"><h2>Documentos del proyecto</h2><div class="project-doc-slots"><div><span>EHL</span><strong>Por cargar</strong></div><div><span>PACCC</span><strong>Por cargar</strong></div><div><span>Crosswalk</span><strong>Por cargar</strong></div><div><span>Matriz maestra</span><strong>Por cargar</strong></div></div><a class="btn" href={`${base}recursos/`}>Ir a recursos →</a></article>
     </section>
+
+    <section class="section"><div class="callout"><strong>Regla de evidencia</strong>Durante el proyecto se distinguirá explícitamente entre información documentada, interpretación del equipo e hipótesis por validar. El repositorio mostrará las versiones vigentes de los instrumentos de trabajo cuando sean cargadas.</div></section>
   </main>
 </BaseLayout>
