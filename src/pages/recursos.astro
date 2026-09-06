@@ -1,56 +1,94 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const resources = [
-  ['PROG','Programa oficial','Programa institucional de la asignatura','Documento oficial',null],
-  ['PDF','Checkland — Pensamiento de sistemas, práctica de sistemas','Lectura base para pensamiento sistémico y SSM','Campus Virtual',null],
-  ['LIBRO','Clayton & Radcliffe — Sustainability: A Systems Approach','Lectura para sustentabilidad desde un enfoque sistémico','Campus Virtual',null],
-  ['DIAG','Diagnóstico inicial','Línea base individual: fenómeno, observador, sistema e incertidumbre','Google Drive','https://drive.google.com/file/d/1tG5LsTXpCXaOZ-mW0VCaVK5L53XiayGT/view?usp=drivesdk'],
-  ['GUÍA','Rich Picture · Estero Los Aromos','Actividad grupal de exploración sistémica del 29 de septiembre','Google Drive','https://drive.google.com/file/d/1lax6RqMukfXO-irAZij1H73NaI6h-qdj/view?usp=drivesdk'],
-  ['DIAG','Problemas complejos','Diagnóstico individual previo al trabajo formal con Checkland','Google Drive','https://drive.google.com/file/d/1-PlCDieYE77lKWAKiqjCI1b8erMdppn3/view?usp=drivesdk'],
-  ['GUÍA','Del Rich Picture a Sistemas Relevantes','Actividad grupal sobre emergencia, niveles, información, control y definición raíz','Google Drive','https://drive.google.com/file/d/1PerGlamGYHzMkSnYwfuJhj81zxdti17a/view?usp=drivesdk'],
-  ['DIAG','Propiedades sistémicas','Diagnóstico individual de emergencia, niveles, información y sistemas relevantes','Google Drive','https://drive.google.com/file/d/1-QYFOoyg08m8N2p2-qlpeAU19pA_dOvE/view?usp=drivesdk'],
-  ['GUÍA','Caja negra y transformación','Herramienta para modelar transformación, entradas y salidas','Planificada',null],
-  ['MATRIZ','Crosswalk EHL–PACCC','Matriz para analizar relaciones entre instrumentos','Proyecto Peñaflor',null],
-  ['MATRIZ','Matriz maestra de implementabilidad','Evidencia, roles, capacidades, dependencias, riesgos e indicadores','Proyecto Peñaflor',null],
-];
+import { resourceCategories } from '../data/course';
+import { resources } from '../data/resources';
 ---
 <BaseLayout active="recursos" title="Recursos · Teoría de Sistemas">
   <main class="shell">
     <section class="hero compact">
       <div class="eyebrow">Recursos</div>
       <h1>Biblioteca del curso</h1>
-      <p class="lead">Un punto único para localizar materiales docentes, herramientas, lecturas y documentos del proyecto vinculado.</p>
+      <p class="lead">La estructura ya está preparada. Los documentos pueden incorporarse posteriormente sin modificar el diseño del sistema.</p>
+    </section>
+
+    <section class="grid-3 section resource-category-grid">
+      {resourceCategories.map((item) => (
+        <button class="card category-card" type="button" data-category={item.id}>
+          <span class="resource-icon">{item.icon}</span>
+          <span><strong>{item.label}</strong><small>{item.desc}</small></span>
+        </button>
+      ))}
+    </section>
+
+    <section class="card calendar-controls section" aria-label="Buscar y filtrar recursos">
+      <div class="calendar-search-wrap">
+        <label for="resource-search">Buscar recursos</label>
+        <input id="resource-search" class="repo-search-input" type="search" placeholder="Ej.: EHL, rúbrica, Rich Picture, lectura…" autocomplete="off" />
+      </div>
+      <div class="filter-pills" role="group" aria-label="Categorías de recursos">
+        <button class="filter-pill active" type="button" data-filter="all">Todo</button>
+        {resourceCategories.map((item) => <button class="filter-pill" type="button" data-filter={item.id}>{item.label}</button>)}
+      </div>
     </section>
 
     <section class="section">
-      <div class="callout"><strong>Regla del repositorio</strong>Los materiales de elaboración docente pueden alojarse o enlazarse directamente desde aquí. Los libros, capítulos y artículos protegidos se mantendrán en Campus Virtual.</div>
-    </section>
-
-    <section class="section">
-      <div class="section-title"><h2>Recursos disponibles y planificados</h2><span class="card-kicker">Versión 2026-2</span></div>
-      <div class="resource-list">
-        {resources.map(([type,title,desc,status,href]) => (
-          href ? (
-            <a class="resource-item" href={href} target="_blank" rel="noreferrer">
-              <div class="resource-icon">{type}</div>
-              <div><strong>{title}</strong><small>{desc}</small></div>
-              <span class="status">{status} ↗</span>
+      <div class="section-title"><h2>Registro de recursos</h2><span class="card-kicker">LISTO PARA CARGA DOCUMENTAL</span></div>
+      <div class="resource-list" id="resource-list">
+        {resources.map((item) => (
+          item.href ? (
+            <a class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()} href={item.href} target="_blank" rel="noreferrer">
+              <div class="resource-icon">{item.type}</div>
+              <div><strong>{item.title}</strong><small>{item.description}</small></div>
+              <span class:list={['status', item.status === 'Disponible' && 'available-text']}>{item.status} ↗</span>
             </a>
           ) : (
-            <article class="resource-item">
-              <div class="resource-icon">{type}</div>
-              <div><strong>{title}</strong><small>{desc}</small></div>
-              <span class="status">{status}</span>
+            <article class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()}>
+              <div class="resource-icon">{item.type}</div>
+              <div><strong>{item.title}</strong><small>{item.description}</small></div>
+              <span class="status">{item.status}</span>
             </article>
           )
         ))}
       </div>
+      <div id="resource-empty" class="empty-state" hidden><strong>No encontramos recursos.</strong><span>Prueba con otro término o cambia la categoría.</span></div>
     </section>
 
-    <section class="section grid-3">
-      <article class="card phase"><h3>Lecturas</h3><p>Textos base y complementarios organizados según la progresión conceptual del curso.</p></article>
-      <article class="card phase"><h3>Herramientas</h3><p>Guías operativas para problematizar, distinguir, modelar, diagnosticar e intervenir.</p></article>
-      <article class="card phase"><h3>Proyecto Peñaflor</h3><p>Instrumentos públicos, matrices de análisis y productos de trabajo vinculados a EHL y PACCC.</p></article>
+    <section class="section grid-2">
+      <article class="card prose-card"><h2>Regla de publicación</h2><p>Materiales docentes, guías y documentos públicos pueden alojarse o enlazarse desde el repositorio. Libros, capítulos y otros materiales protegidos se mantienen en Campus Virtual.</p></article>
+      <article class="card prose-card"><h2>Cómo se incorporarán</h2><p>La biblioteca utiliza un registro central. Al agregar un archivo solo se define su categoría, título, descripción, estado y enlace. No es necesario modificar la diagramación ni construir una página nueva.</p></article>
     </section>
+
+    <script is:inline>
+      (() => {
+        const input = document.getElementById('resource-search');
+        const pills = [...document.querySelectorAll('.filter-pill')];
+        const categoryCards = [...document.querySelectorAll('.category-card')];
+        const items = [...document.querySelectorAll('.library-item')];
+        const empty = document.getElementById('resource-empty');
+        let active = 'all';
+        const normalize = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        const apply = () => {
+          const q = normalize(input?.value);
+          let visible = 0;
+          items.forEach((item) => {
+            const matchesCategory = active === 'all' || item.dataset.category === active;
+            const matchesQuery = !q || normalize(item.dataset.search).includes(q);
+            const show = matchesCategory && matchesQuery;
+            item.hidden = !show;
+            if (show) visible++;
+          });
+          if (empty) empty.hidden = visible !== 0;
+        };
+        const choose = (value) => {
+          active = value;
+          pills.forEach((p) => p.classList.toggle('active', p.dataset.filter === active));
+          apply();
+          document.getElementById('resource-list')?.scrollIntoView({behavior:'smooth', block:'start'});
+        };
+        input?.addEventListener('input', apply);
+        pills.forEach((pill) => pill.addEventListener('click', () => choose(pill.dataset.filter || 'all')));
+        categoryCards.forEach((card) => card.addEventListener('click', () => choose(card.dataset.category || 'all')));
+      })();
+    </script>
   </main>
 </BaseLayout>

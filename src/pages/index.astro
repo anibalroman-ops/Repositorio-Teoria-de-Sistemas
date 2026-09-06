@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { learningRoute, sessions, evaluations } from '../data/course';
 const base = import.meta.env.BASE_URL;
-const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Diagnosticar','Intervenir'];
-const classes = [
-  ['22 SEP', 'El observador y la construcción de sistemas', `${base}clases/22-septiembre/`],
-  ['29 SEP', 'Pensamiento sistémico y situaciones problemáticas', `${base}clases/29-septiembre/`],
-  ['01 OCT', 'Propiedades sistémicas y sistemas relevantes', `${base}clases/01-octubre/`],
-  ['06 OCT', 'Teorías de sistemas y problemáticas socioambientales', `${base}clases/06-octubre/`],
-];
-const cal = ['L','M','M','J','V','S','D','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','01','02','03','04','05'];
+const availableClasses = sessions.filter((s) => s.status === 'Disponible' && s.href && s.kind === 'clase').slice(0,5);
+const fallbackNext = sessions.find((s) => s.kind !== 'feriado')!;
+const fallbackEval = evaluations[0];
+const clientSessions = sessions.map(({date,label,day,time,title,detail,status,kind,href}) => ({date,label,day,time,title,detail,status,kind,href}));
+const clientEvals = evaluations.map(({date,dateLabel,code,title,weight}) => ({date,dateLabel,code,title,weight}));
 ---
 <BaseLayout active="inicio">
   <main class="shell">
@@ -28,8 +26,8 @@ const cal = ['L','M','M','J','V','S','D','15','16','17','18','19','20','21','22'
           <h2>Pensar sistemas desde problemas reales</h2>
           <p>El curso progresa desde la observación y problematización hasta el diagnóstico y diseño de intervenciones, usando Peñaflor como contexto auténtico de aplicación.</p>
           <div class="quick-strip">
-            <div class="quick-chip"><small>Próxima clase</small><strong>22 SEP</strong></div>
-            <div class="quick-chip"><small>Próximo hito</small><strong>E1 · 13 OCT</strong></div>
+            <div class="quick-chip"><small>Próxima sesión</small><strong id="quick-next-date">{fallbackNext.label}</strong></div>
+            <div class="quick-chip"><small>Próximo hito</small><strong id="quick-next-eval">{fallbackEval.code} · {fallbackEval.dateLabel}</strong></div>
             <div class="quick-chip"><small>Proyecto</small><strong>Peñaflor</strong></div>
           </div>
           <div class="banner-art" aria-hidden="true">
@@ -39,25 +37,25 @@ const cal = ['L','M','M','J','V','S','D','15','16','17','18','19','20','21','22'
         </article>
 
         <article class="card schedule-card">
-          <div class="card-head"><h2>Próxima clase</h2><span class="card-kicker">CLASE 01</span></div>
-          <div class="schedule-time">Martes 22 de septiembre · 15:20–18:15</div>
-          <h3>El observador y la construcción de sistemas</h3>
-          <p class="meta">Fenómeno · observador · sistema · diagnóstico inicial · presentación de E1 y del desafío Peñaflor.</p>
-          <div class="actions"><a class="btn primary" href={`${base}clases/22-septiembre/`}>Abrir clase →</a><a class="btn" href={`${base}clases/`}>Ver semestre</a></div>
+          <div class="card-head"><h2>Próxima sesión</h2><span class="card-kicker" id="next-kind">CLASE</span></div>
+          <div class="schedule-time" id="next-date">{fallbackNext.day} · {fallbackNext.label} · {fallbackNext.time}</div>
+          <h3 id="next-title">{fallbackNext.title}</h3>
+          <p class="meta" id="next-detail">{fallbackNext.detail}</p>
+          <div class="actions"><a class="btn primary" id="next-button" href={`${base}${fallbackNext.href ?? 'clases/'}`}>Abrir →</a><a class="btn" href={`${base}clases/`}>Ver semestre</a></div>
         </article>
 
         <a href={`${base}curso/`} class="card compact-route" style="display:block;">
           <div class="card-head"><h2>Ruta del semestre</h2><span class="card-kicker">PROGRESIÓN</span></div>
-          <div class="route-line">{route.map((item) => <div class="step">{item}</div>)}</div>
+          <div class="route-line">{learningRoute.map((item) => <div class="step">{item}</div>)}</div>
         </a>
 
         <article class="card">
           <div class="card-pad">
-            <div class="card-head"><h2>Clases disponibles</h2><a class="card-kicker" href={`${base}clases/`}>VER TODAS →</a></div>
+            <div class="card-head"><h2>Clases publicadas</h2><a class="card-kicker" href={`${base}clases/`}>VER SEMESTRE →</a></div>
             <div class="list">
-              {classes.map(([date,title,href],i) => (
-                <a class:list={['row', i === 0 && 'highlight']} href={href}>
-                  <span class="date">{date}</span><span>{title}</span><span class="status">Disponible</span>
+              {availableClasses.map((item,i) => (
+                <a class:list={['row', i === 0 && 'highlight']} href={`${base}${item.href}`}>
+                  <span class="date">{item.label}</span><span>{item.title}</span><span class="status">Disponible</span>
                 </a>
               ))}
             </div>
@@ -67,17 +65,17 @@ const cal = ['L','M','M','J','V','S','D','15','16','17','18','19','20','21','22'
 
       <aside class="dashboard-rail">
         <article class="card rail-card">
-          <div class="card-head"><h2>Próximo hito</h2><span class="card-kicker">15%</span></div>
-          <span class="rail-big">E1 · Teorías</span>
-          <span class="meta">13 de octubre</span>
-          <p class="rail-note">Presentar una teoría como lente explicativa: problema, conceptos, mecanismo, aplicación, alcance y límites.</p>
+          <div class="card-head"><h2>Próximo hito evaluativo</h2><span class="card-kicker" id="eval-weight">{fallbackEval.weight}</span></div>
+          <span class="rail-big" id="eval-title">{fallbackEval.code} · {fallbackEval.title}</span>
+          <span class="meta" id="eval-date">{fallbackEval.dateLabel}</span>
+          <p class="rail-note">Las instrucciones y documentos oficiales se incorporarán aquí; las entregas y calificaciones permanecen en Campus Virtual.</p>
           <div class="actions"><a class="btn" href={`${base}evaluaciones/`}>Evaluaciones →</a></div>
         </article>
 
         <article class="card rail-card">
-          <div class="card-head"><h2>Septiembre</h2><span class="card-kicker">2026</span></div>
-          <div class="mini-calendar">
-            {cal.map((d,i) => <span class:list={[i < 7 && 'head', d === '22' && 'active', d === '29' && 'mark']}>{d}</span>)}
+          <div class="card-head"><h2>Próximas fechas</h2><a class="card-kicker" href={`${base}clases/`}>CALENDARIO →</a></div>
+          <div class="upcoming-list" id="upcoming-list">
+            {sessions.filter((s)=>s.kind !== 'feriado').slice(0,4).map((s)=><div class="upcoming-row"><span>{s.label}</span><small>{s.title}</small></div>)}
           </div>
         </article>
 
@@ -99,5 +97,39 @@ const cal = ['L','M','M','J','V','S','D','15','16','17','18','19','20','21','22'
         </article>
       </aside>
     </section>
+
+    <script type="application/json" id="schedule-data" set:html={JSON.stringify(clientSessions)}></script>
+    <script type="application/json" id="evaluation-data" set:html={JSON.stringify(clientEvals)}></script>
+    <script is:inline define:vars={{base}}>
+      (() => {
+        const schedule = JSON.parse(document.getElementById('schedule-data')?.textContent || '[]');
+        const evals = JSON.parse(document.getElementById('evaluation-data')?.textContent || '[]');
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const next = schedule.find((s) => s.kind !== 'feriado' && new Date(`${s.date}T23:59:59`) >= today) || schedule[schedule.length - 1];
+        const nextEval = evals.find((e) => new Date(`${e.date}T23:59:59`) >= today) || evals[evals.length - 1];
+        if (next) {
+          const q = (id) => document.getElementById(id);
+          q('quick-next-date').textContent = next.label;
+          q('next-kind').textContent = next.kind === 'evaluacion' ? 'EVALUACIÓN' : next.kind === 'hito' ? 'HITO' : 'CLASE';
+          q('next-date').textContent = `${next.day} · ${next.label} · ${next.time}`;
+          q('next-title').textContent = next.title;
+          q('next-detail').textContent = next.detail;
+          const button = q('next-button');
+          button.href = `${base}${next.href || 'clases/'}`;
+          button.textContent = next.href ? 'Abrir →' : 'Ver calendario →';
+          const upcoming = schedule.filter((s) => s.kind !== 'feriado' && new Date(`${s.date}T23:59:59`) >= today).slice(0,4);
+          const list = q('upcoming-list');
+          if (list) list.innerHTML = upcoming.map((s) => `<div class="upcoming-row"><span>${s.label}</span><small>${s.title}</small></div>`).join('');
+        }
+        if (nextEval) {
+          const q = (id) => document.getElementById(id);
+          q('quick-next-eval').textContent = `${nextEval.code} · ${nextEval.dateLabel}`;
+          q('eval-weight').textContent = nextEval.weight;
+          q('eval-title').textContent = `${nextEval.code} · ${nextEval.title}`;
+          q('eval-date').textContent = nextEval.dateLabel;
+        }
+      })();
+    </script>
   </main>
 </BaseLayout>

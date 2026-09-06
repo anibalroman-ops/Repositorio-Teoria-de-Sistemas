@@ -1,8 +1,10 @@
 ---
 import '../styles/global.css';
+import '../styles/v1.css';
+import { siteConfig } from '../data/site';
 const {
-  title = 'Teoría de Sistemas · 2026-2',
-  description = 'Repositorio académico del curso Teoría de Sistemas — Ingeniería Civil en Ambiente, USACH.',
+  title = `${siteConfig.courseName} · ${siteConfig.semesterShort}`,
+  description = `Repositorio académico del curso ${siteConfig.courseName} — ${siteConfig.career}, USACH.`,
   active = ''
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
@@ -20,31 +22,33 @@ const currentLabel = navItems.find(([id]) => id === active)?.[1] || 'Inicio';
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#143f43" />
+    <meta name="color-scheme" content="light" />
     <title>{title}</title>
   </head>
-  <body>
+  <body data-semester-start={siteConfig.semesterStart} data-semester-end={siteConfig.semesterEnd}>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="app-shell">
       <aside class="app-sidebar" aria-label="Navegación del curso">
         <a class="sidebar-brand" href={base} aria-label="Ir al inicio">
           <span class="brand-mark">TS</span>
           <span>
-            <small>Ingeniería Civil en Ambiente</small>
-            <strong>Teoría de Sistemas</strong>
+            <small>{siteConfig.career}</small>
+            <strong>{siteConfig.courseName}</strong>
           </span>
         </a>
 
         <div class="sidebar-meta">
           <span class="meta-label">SEMESTRE</span>
-          <strong>2026 · 2</strong>
-          <small>Universidad de Santiago de Chile</small>
+          <strong>{siteConfig.semester}</strong>
+          <small>{siteConfig.institution}</small>
         </div>
 
         <nav class="side-nav">
           {navItems.map(([id,label,href,num]) => (
-            <a class:list={['side-link', active === id && 'active']} href={href}>
+            <a class:list={['side-link', active === id && 'active']} href={href} aria-current={active === id ? 'page' : undefined}>
               <span class="side-num">{num}</span>
               <span>{label}</span>
             </a>
@@ -53,10 +57,10 @@ const currentLabel = navItems.find(([id]) => id === active)?.[1] || 'Inicio';
 
         <div class="sidebar-footer">
           <div class="semester-progress">
-            <div class="progress-copy"><span>Ruta del semestre</span><strong>01 / 07</strong></div>
-            <div class="progress-track"><span></span></div>
+            <div class="progress-copy"><span>Avance del semestre</span><strong id="semester-progress-label">0%</strong></div>
+            <div class="progress-track" aria-hidden="true"><span id="semester-progress-bar"></span></div>
           </div>
-          <span class="sidebar-note">Repositorio académico · v0.3</span>
+          <span class="sidebar-note">{siteConfig.repositoryLabel} · v{siteConfig.version}</span>
         </div>
       </aside>
 
@@ -67,18 +71,38 @@ const currentLabel = navItems.find(([id]) => id === active)?.[1] || 'Inicio';
             <strong>{currentLabel}</strong>
           </div>
           <div class="utility-actions">
-            <span class="status-pill"><i></i> 2026-2</span>
-            <span class="moodle-link" title="El enlace al Campus Virtual se configurará en la siguiente etapa">Campus Virtual ↗</span>
+            <a class="search-link" href={`${base}buscar/`} aria-label="Buscar en el repositorio">⌕ <span>Buscar</span></a>
+            <span class="status-pill"><i></i> {siteConfig.semesterShort}</span>
+            {siteConfig.moodleUrl ? (
+              <a class="moodle-link" href={siteConfig.moodleUrl} target="_blank" rel="noreferrer">Campus Virtual ↗</a>
+            ) : (
+              <span class="moodle-link disabled" title="El enlace se incorporará cuando se configure Campus Virtual">Campus Virtual ↗</span>
+            )}
           </div>
         </header>
 
-        <slot />
+        <div id="contenido"><slot /></div>
 
         <footer class="footer">
-          <span>Teoría de Sistemas · Ingeniería Civil en Ambiente</span>
-          <span>Universidad de Santiago de Chile</span>
+          <span>{siteConfig.courseName} · {siteConfig.career}</span>
+          <span>{siteConfig.institution}</span>
         </footer>
       </div>
     </div>
+
+    <script is:inline>
+      (() => {
+        const body = document.body;
+        const start = new Date(`${body.dataset.semesterStart}T00:00:00`);
+        const end = new Date(`${body.dataset.semesterEnd}T23:59:59`);
+        const now = new Date();
+        const total = Math.max(1, end - start);
+        const pct = Math.max(0, Math.min(100, Math.round(((now - start) / total) * 100)));
+        const bar = document.getElementById('semester-progress-bar');
+        const label = document.getElementById('semester-progress-label');
+        if (bar) bar.style.width = `${pct}%`;
+        if (label) label.textContent = `${pct}%`;
+      })();
+    </script>
   </body>
 </html>

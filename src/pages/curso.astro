@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Diagnosticar','Intervenir'];
+import { learningRoute } from '../data/course';
+const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout active="curso" title="Curso · Teoría de Sistemas">
   <main class="shell">
@@ -16,22 +17,29 @@ const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Dia
       <article class="card stat"><strong>2</strong><span>Sesiones semanales · martes y jueves</span></article>
     </section>
 
+    <section class="section course-facts">
+      <article class="card course-fact"><small>MARTES</small><strong>15:20–18:15</strong><span>Bloque principal · 175 min</span></article>
+      <article class="card course-fact"><small>JUEVES</small><strong>15:20–16:45</strong><span>Bloque breve · 85 min</span></article>
+      <article class="card course-fact"><small>MODALIDAD</small><strong>Teórico-práctica</strong><span>Casos · talleres · modelamiento · proyecto</span></article>
+      <article class="card course-fact"><small>CONTEXTO</small><strong>Peñaflor</strong><span>Asignatura vinculada con contraparte real</span></article>
+    </section>
+
     <section class="section">
-      <div class="section-title"><h2>Resultado de aprendizaje general</h2><span class="card-kicker">Programa oficial</span></div>
-      <article class="card prose-card">
-        <p style="font-family:Georgia,serif;font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.45;color:var(--ink);margin:0;">“Analizar sistemas complejos en el ámbito de la ingeniería civil en ambiente mediante la aplicación rigurosa del pensamiento sistémico, integrando información diversa, liderando procesos colaborativos de diseño y aprendizaje autónomo, comunicando resultados de forma clara y efectiva, tanto oral como escrita.”</p>
+      <div class="section-title"><h2>Resultado de aprendizaje general</h2><span class="card-kicker">PROGRAMA OFICIAL</span></div>
+      <article class="card prose-card ra-card">
+        <p>“Analizar sistemas complejos en el ámbito de la ingeniería civil en ambiente mediante la aplicación rigurosa del pensamiento sistémico, integrando información diversa, liderando procesos colaborativos de diseño y aprendizaje autónomo, comunicando resultados de forma clara y efectiva, tanto oral como escrita.”</p>
       </article>
     </section>
 
     <section class="card route section">
-      <div class="card-head"><h2>Ruta del aprendizaje</h2><span class="card-kicker">Progresión del semestre</span></div>
-      <div class="route-line">{route.map((item) => <div class="step">{item}</div>)}</div>
+      <div class="card-head"><h2>Ruta del aprendizaje</h2><span class="card-kicker">PROGRESIÓN DEL SEMESTRE</span></div>
+      <div class="route-line">{learningRoute.map((item) => <div class="step">{item}</div>)}</div>
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Seis macrocapacidades</h2><p>La reingeniería curricular organiza contenidos y habilidades en capacidades amplias que reaparecen y se profundizan durante el semestre.</p></div>
+      <div class="section-title"><h2>Seis macrocapacidades</h2><p>Los contenidos y habilidades se organizan en capacidades amplias que reaparecen y se profundizan durante el semestre.</p></div>
       <div class="grid-3">
-        <article class="card phase"><div class="card-kicker">MC1</div><h3>Problematizar</h3><p>Construir una comprensión sistémica de situaciones complejas considerando actores, relaciones, perspectivas y evidencia.</p></article>
+        <article class="card phase"><div class="card-kicker">MC1</div><h3>Problematizar</h3><p>Construir una comprensión sistémica considerando actores, relaciones, perspectivas, tensiones y evidencia.</p></article>
         <article class="card phase"><div class="card-kicker">MC2</div><h3>Distinguir y delimitar</h3><p>Definir sistemas pertinentes, propósito, límites, entorno y perspectivas de observación.</p></article>
         <article class="card phase"><div class="card-kicker">MC3</div><h3>Modelar</h3><p>Representar transformaciones, componentes, relaciones y arquitectura de sistemas.</p></article>
         <article class="card phase"><div class="card-kicker">MC4</div><h3>Explicar</h3><p>Comprender información, regulación, decisiones, retroalimentación y comportamiento.</p></article>
@@ -41,11 +49,25 @@ const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Dia
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Cómo trabajaremos</h2><p>El curso combina estudio conceptual, discusión, casos, modelamiento, trabajo colaborativo y un desafío auténtico vinculado a la Municipalidad de Peñaflor.</p></div>
+      <div class="section-title"><h2>Unidades oficiales</h2><p>Las unidades del programa institucional se mantienen como estructura curricular; la navegación del repositorio se organiza por clases para facilitar el uso cotidiano.</p></div>
       <div class="grid-2">
-        <article class="card prose-card"><h2>Aprender haciendo</h2><p>Las herramientas se introducen, aplican de manera guiada, se contrastan en situaciones reales y luego se formalizan. El error y la revisión son parte del proceso de construcción del razonamiento sistémico.</p></article>
-        <article class="card prose-card"><h2>Evaluación alineada</h2><p>Las evaluaciones progresan desde la comprensión de teorías hacia la problematización, el modelamiento, el diagnóstico y la intervención. La evaluación municipal aporta una mirada externa sobre pertinencia y utilidad profesional.</p></article>
+        <article class="card prose-card unit-card"><div class="card-kicker">UNIDAD 1 · LA CIENCIA DE LOS SISTEMAS</div><h2>Fundamentos y pensamiento sistémico</h2><div class="tags"><span class="tag">pensamiento sistémico</span><span class="tag">clasificaciones</span><span class="tag">movimiento de sistemas</span><span class="tag">teorías</span><span class="tag">tesis sistémicas</span><span class="tag">axiomática</span></div></article>
+        <article class="card prose-card unit-card"><div class="card-kicker">UNIDAD 2 · MODELAMIENTO SISTÉMICO</div><h2>Regulación, viabilidad y herramientas de modelamiento</h2><div class="tags"><span class="tag">cibernética</span><span class="tag">variedad</span><span class="tag">viabilidad</span><span class="tag">dinámica de sistemas</span><span class="tag">VIPLAN</span><span class="tag">SSM</span><span class="tag">BPMN</span></div></article>
       </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Cómo trabajaremos</h2><p>La progresión es espiral: introducir → aplicar de manera guiada → utilizar en el desafío auténtico → revisar → formalizar → evaluar.</p></div>
+      <div class="grid-3">
+        <article class="card prose-card"><h2>Aprender haciendo</h2><p>Las herramientas se ensayan antes de ser evaluadas. El error, la comparación y la revisión forman parte explícita del proceso.</p></article>
+        <article class="card prose-card"><h2>Evaluación alineada</h2><p>Las evidencias progresan desde comprensión y transferencia hacia problematización, modelamiento, diagnóstico e intervención.</p><a class="btn" href={`${base}evaluaciones/`}>Ver evaluaciones →</a></article>
+        <article class="card prose-card"><h2>Proyecto auténtico</h2><p>Peñaflor funciona como contexto de aplicación y contraste con una contraparte real, no como reemplazo de la secuencia conceptual del curso.</p><a class="btn" href={`${base}proyecto-penaflor/`}>Ver proyecto →</a></article>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card prose-card"><h2>Este repositorio</h2><p>Centraliza clases, evaluaciones, calendario, proyecto y materiales vigentes. Está diseñado para que el estudiante encuentre rápidamente qué viene, qué debe preparar y dónde está cada recurso.</p></article>
+      <article class="card prose-card"><h2>Campus Virtual</h2><p>Moodle conserva matrícula, avisos, entregas, calificaciones y materiales protegidos. El repositorio funciona como interfaz académica del curso.</p></article>
     </section>
   </main>
 </BaseLayout>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sessions, evaluations } from '../data/course';
+import { resources } from '../data/resources';
+const base = import.meta.env.BASE_URL;
+const indexItems = [
+  { category:'Curso', title:'Resultado de aprendizaje y arquitectura del curso', desc:'Propósito, macrocapacidades, metodología y progresión del semestre.', href:`${base}curso/`, terms:'curso resultado aprendizaje macrocapacidades metodologia progresion' },
+  { category:'Proyecto', title:'Municipalidad de Peñaflor', desc:'Desafío EHL–PACCC, equipos, capas de análisis e hitos H0–H3.', href:`${base}proyecto-penaflor/`, terms:'penaflor ehl paccc h0 h1 h2 h3 hoja ruta municipio' },
+  ...sessions.map((s) => ({ category: s.kind === 'evaluacion' ? 'Evaluación' : s.kind === 'hito' ? 'Hito' : 'Clase', title:`${s.label} · ${s.title}`, desc:s.detail, href:s.href ? `${base}${s.href}` : `${base}clases/`, terms:`${s.label} ${s.title} ${s.detail} ${s.kind}` })),
+  ...evaluations.map((e) => ({ category:'Evaluación', title:`${e.code} · ${e.title}`, desc:`${e.weight} · ${e.mode} · ${e.purpose}`, href:`${base}evaluaciones/#${e.code.toLowerCase()}`, terms:`${e.code} ${e.title} ${e.purpose} ${e.evidence}` })),
+  ...resources.map((r) => ({ category:'Recurso', title:r.title, desc:r.description, href:`${base}recursos/`, terms:`${r.title} ${r.description} ${r.category} ${r.type}` })),
+];
+---
+<BaseLayout title="Buscar · Teoría de Sistemas">
+  <main class="shell search-page">
+    <section class="hero compact">
+      <div class="eyebrow">Buscar</div>
+      <h1>Encuentra rápidamente lo que necesitas</h1>
+      <p class="lead">Busca por clase, concepto, evaluación, herramienta, fecha o elemento del proyecto Peñaflor.</p>
+    </section>
+
+    <section class="card global-search-panel section">
+      <label for="global-search">Buscar en el repositorio</label>
+      <div class="global-search-box"><span>⌕</span><input id="global-search" type="search" placeholder="Ej.: cibernética, caja negra, E3, PACCC…" autofocus autocomplete="off" /></div>
+      <div class="search-help"><span>Prueba también:</span><button type="button" data-term="Checkland">Checkland</button><button type="button" data-term="Peñaflor">Peñaflor</button><button type="button" data-term="evaluación">Evaluaciones</button><button type="button" data-term="diagnóstico">Diagnóstico</button></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Resultados</h2><span class="card-kicker" id="result-count">{indexItems.length} elementos</span></div>
+      <div class="search-results" id="search-results">
+        {indexItems.map((item) => (
+          <a class="card search-result" href={item.href} data-search={`${item.title} ${item.desc} ${item.terms}`.toLowerCase()}>
+            <span class="search-result-category">{item.category}</span>
+            <div><h3>{item.title}</h3><p>{item.desc}</p></div>
+            <span class="search-arrow">→</span>
+          </a>
+        ))}
+      </div>
+      <div class="empty-state" id="search-empty" hidden><strong>No encontramos coincidencias.</strong><span>Prueba con una palabra más general o revisa el calendario completo.</span><a class="btn" href={`${base}clases/`}>Ver todas las clases</a></div>
+    </section>
+
+    <script is:inline>
+      (() => {
+        const input = document.getElementById('global-search');
+        const items = [...document.querySelectorAll('.search-result')];
+        const count = document.getElementById('result-count');
+        const empty = document.getElementById('search-empty');
+        const shortcuts = [...document.querySelectorAll('[data-term]')];
+        const normalize = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        const apply = () => {
+          const q = normalize(input?.value);
+          let visible = 0;
+          items.forEach((item) => {
+            const show = !q || normalize(item.dataset.search).includes(q);
+            item.hidden = !show;
+            if (show) visible++;
+          });
+          if (count) count.textContent = `${visible} ${visible === 1 ? 'elemento' : 'elementos'}`;
+          if (empty) empty.hidden = visible !== 0;
+        };
+        input?.addEventListener('input', apply);
+        shortcuts.forEach((button) => button.addEventListener('click', () => {
+          if (input) input.value = button.dataset.term || '';
+          apply();
+          input?.focus();
+        }));
+      })();
+    </script>
+  </main>
+</BaseLayout>

@@ -1,13 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const evaluations = [
-  ['E1','Presentación de teorías de sistemas','15%','Grupal','13 OCT','Comprender una teoría, explicar su mecanismo, aplicarla y reconocer su alcance y límites.'],
-  ['E2','Evaluación individual','15%','Individual','27 OCT','Transferir conceptos y herramientas a mini-casos socioambientales.'],
-  ['E3','Problematización y sistema pertinente','20%','Grupal + defensa','NOV','Construir la situación-problema, contrastar perspectivas y delimitar un sistema pertinente.'],
-  ['E4','Modelamiento integrado','20%','Grupal + defensa','DIC','Representar transformación, arquitectura, información, regulación y dinámica.'],
-  ['E5','Diagnóstico e intervención','20%','Grupal','ENE','Integrar evidencia, mecanismos, brechas y puntos de intervención para justificar alternativas.'],
-  ['E6','Evaluación municipal','10%','Grupal','12 ENE','Valorar pertinencia, utilidad, evidencia local y calidad de la comunicación profesional.'],
-];
+import { evaluations } from '../data/course';
+const base = import.meta.env.BASE_URL;
+const total = evaluations.reduce((sum, item) => sum + Number(item.weight.replace('%','')), 0);
 ---
 <BaseLayout active="evaluaciones" title="Evaluaciones · Teoría de Sistemas">
   <main class="shell">
@@ -17,25 +12,45 @@ const evaluations = [
       <p class="lead">La evaluación acompaña una progresión: comprender teorías, transferir, problematizar, modelar, diagnosticar e intervenir.</p>
     </section>
 
+    <section class="grid-3 section semester-stats">
+      <article class="card stat"><strong>6</strong><span>evaluaciones sumativas</span></article>
+      <article class="card stat"><strong>{total}%</strong><span>ponderación total del curso</span></article>
+      <article class="card stat"><strong>1</strong><span>evaluación externa de la contraparte municipal</span></article>
+    </section>
+
+    <section class="section evaluation-sequence" aria-label="Progresión evaluativa">
+      <div class="section-title"><h2>Progresión evaluativa</h2><span class="card-kicker">DE LA COMPRENSIÓN A LA INTERVENCIÓN</span></div>
+      <div class="evaluation-flow">
+        <span>E1 · comprender</span><i>→</i><span>E2 · transferir</span><i>→</i><span>E3 · problematizar</span><i>→</i><span>E4 · modelar</span><i>→</i><span>E5 · intervenir</span><i>→</i><span>E6 · comunicar</span>
+      </div>
+    </section>
+
     <section class="grid-3 section">
-      {evaluations.map(([code,title,weight,mode,date,desc]) => (
-        <article class="card eval-card">
-          <div class="card-kicker">{code} · {mode}</div>
-          <div class="weight">{weight}</div>
-          <h3>{title}</h3>
-          <p>{desc}</p>
-          <div class="tags"><span class="tag">{date}</span></div>
+      {evaluations.map((item) => (
+        <article class="card eval-card" id={item.code.toLowerCase()}>
+          <div class="card-kicker">{item.code} · {item.mode}</div>
+          <div class="weight">{item.weight}</div>
+          <h3>{item.title}</h3>
+          <p>{item.purpose}</p>
+          <div class="eval-meta-grid">
+            <div><small>FECHA</small><strong>{item.dateLabel}</strong></div>
+            <div><small>EVIDENCIA</small><strong>{item.evidence}</strong></div>
+          </div>
+          <div class="document-slot">
+            <span>Documentación</span>
+            <strong>Por cargar</strong>
+          </div>
         </article>
       ))}
     </section>
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Evaluación para aprender</h2><p>Las actividades formativas permiten ensayar distinciones, representaciones y explicaciones antes de las evaluaciones sumativas. La retroalimentación se orienta a pocos focos prioritarios de mejora y a la calidad de la evidencia utilizada.</p></article>
-      <article class="card prose-card"><h2>Evaluación vinculada</h2><p>La Municipalidad de Peñaflor participa en la evaluación final desde una perspectiva profesional y contextual. La corrección disciplinaria de los modelos sistémicos permanece bajo responsabilidad docente.</p></article>
+      <article class="card prose-card"><h2>Evaluación para aprender</h2><p>Las actividades formativas permiten ensayar distinciones, representaciones y explicaciones antes de las evaluaciones sumativas. La retroalimentación se orienta a pocos focos prioritarios de mejora y a la calidad de la evidencia utilizada.</p><div class="tags"><span class="tag">diagnósticos</span><span class="tag">talleres</span><span class="tag">revisión entre pares</span><span class="tag">defensas</span></div></article>
+      <article class="card prose-card"><h2>Evaluación vinculada</h2><p>La Municipalidad de Peñaflor participa en E6 desde una perspectiva profesional y contextual. La corrección disciplinaria de los modelos sistémicos permanece bajo responsabilidad docente.</p><a class="btn" href={`${base}proyecto-penaflor/`}>Ver proyecto vinculado →</a></article>
     </section>
 
     <section class="section">
-      <div class="callout"><strong>Documentos oficiales</strong>Las instrucciones, rúbricas y versiones vigentes de cada evaluación se incorporarán aquí. Las entregas y calificaciones permanecerán en Campus Virtual.</div>
+      <div class="callout"><strong>Funcionamiento del sistema</strong>Este espacio ya está preparado para recibir instrucciones, rúbricas, pautas y versiones vigentes. Cuando se incorporen los documentos, cada evaluación mantendrá una única versión visible. Las entregas y calificaciones seguirán realizándose en Campus Virtual.</div>
     </section>
   </main>
 </BaseLayout>

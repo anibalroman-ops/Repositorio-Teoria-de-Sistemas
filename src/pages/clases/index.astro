@@ -1,47 +1,115 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sessions } from '../../data/course';
 const base = import.meta.env.BASE_URL;
-const classes = [
-  {date:'22 SEP', title:'El observador y la construcción de sistemas', detail:'Fenómeno · observador · sistema · diagnóstico inicial', status:'Disponible', href:`${base}clases/22-septiembre/`},
-  {date:'29 SEP', title:'Pensamiento sistémico y situaciones problemáticas', detail:'Checkland · complejidad · movimiento de sistemas · rich picture', status:'Disponible', href:`${base}clases/29-septiembre/`, current:true},
-  {date:'01 OCT', title:'Propiedades sistémicas y sistemas relevantes', detail:'Emergencia · jerarquía · información · control · definición raíz', status:'Disponible', href:`${base}clases/01-octubre/`},
-  {date:'06 OCT', title:'Teorías de sistemas y problemáticas socioambientales', detail:'Información · cibernética · dinámica de sistemas · invitada GORE RM', status:'Disponible', href:`${base}clases/06-octubre/`},
-  {date:'08 OCT', title:'Delimitación colectiva del desafío Peñaflor', detail:'Evidencia · hipótesis · acuerdos · preguntas sistémicas · primer avance municipal', status:'Disponible', href:`${base}clases/08-octubre/`},
-  {date:'13 OCT', title:'E1 · Presentaciones de teorías de sistemas', detail:'Aplicación, mecanismo, alcance y límites de cada teoría', status:'Hito'},
-  {date:'20 OCT', title:'Transformación y caracterización del sistema', detail:'Caja negra · inputs/outputs · CATWOE/TAPCID', status:'Planificada'},
-  {date:'27 OCT', title:'E2 · Evaluación individual', detail:'Transferencia a mini-casos socioambientales', status:'Hito'},
+const months = [
+  ['SEP','Septiembre'],
+  ['OCT','Octubre'],
+  ['NOV','Noviembre'],
+  ['DIC','Diciembre'],
+  ['ENE','Enero'],
 ];
+const classCount = sessions.filter((s) => s.kind === 'clase').length;
+const milestoneCount = sessions.filter((s) => s.kind === 'hito').length;
+const evalCount = sessions.filter((s) => s.kind === 'evaluacion').length;
 ---
 <BaseLayout active="clases" title="Clases · Teoría de Sistemas">
   <main class="shell">
     <section class="hero compact">
       <div class="eyebrow">Clases</div>
       <h1>El semestre, clase a clase</h1>
-      <p class="lead">Cada sesión conecta conceptos, herramientas y actividades con la progresión general del razonamiento sistémico.</p>
+      <p class="lead">Una vista completa del recorrido del curso, con sesiones, hitos, evaluaciones y estados de publicación.</p>
     </section>
 
-    <section class="section">
-      <article class="card prose-card">
-        <div class="card-head"><h2>Inicio del semestre</h2><span class="card-kicker">Septiembre · Octubre</span></div>
-        <div class="timeline">
-          {classes.map((item) => (
-            item.href ? <a class:list={['timeline-item', item.current && 'current']} href={item.href}>
-              <div class="timeline-date">{item.date}</div>
-              <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-              <span class:list={['badge', item.status === 'Disponible' && 'available']}>{item.status}</span>
-            </a> : <div class="timeline-item">
-              <div class="timeline-date">{item.date}</div>
-              <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-              <span class="badge">{item.status}</span>
-            </div>
-          ))}
-        </div>
-      </article>
+    <section class="grid-3 section semester-stats">
+      <article class="card stat"><strong>{classCount}</strong><span>sesiones de aprendizaje planificadas</span></article>
+      <article class="card stat"><strong>{milestoneCount}</strong><span>hitos de trabajo con la contraparte</span></article>
+      <article class="card stat"><strong>{evalCount}</strong><span>momentos evaluativos en el calendario</span></article>
     </section>
+
+    <section class="card calendar-controls section" aria-label="Filtros del calendario">
+      <div class="calendar-search-wrap">
+        <label for="class-search">Buscar en el semestre</label>
+        <input id="class-search" class="repo-search-input" type="search" placeholder="Ej.: cibernética, E3, Peñaflor, diagnóstico…" autocomplete="off" />
+      </div>
+      <div class="filter-pills" role="group" aria-label="Filtrar sesiones">
+        <button class="filter-pill active" type="button" data-filter="all">Todo</button>
+        <button class="filter-pill" type="button" data-filter="clase">Clases</button>
+        <button class="filter-pill" type="button" data-filter="evaluacion">Evaluaciones</button>
+        <button class="filter-pill" type="button" data-filter="hito">Hitos</button>
+      </div>
+    </section>
+
+    <div id="calendar-empty" class="empty-state" hidden>
+      <strong>No encontramos coincidencias.</strong>
+      <span>Prueba con otro término o restablece los filtros.</span>
+    </div>
+
+    {months.map(([code,label]) => {
+      const items = sessions.filter((s) => s.month === code);
+      return (
+        <section class="section month-section" data-month={code}>
+          <div class="section-title"><h2>{label}</h2><span class="card-kicker">{items.length} fechas</span></div>
+          <article class="card prose-card calendar-card">
+            <div class="timeline">
+              {items.map((item) => {
+                const href = item.href ? `${base}${item.href}` : undefined;
+                const classes = ['timeline-item','calendar-item', item.status === 'Disponible' && 'current', `kind-${item.kind}`];
+                const body = <>
+                  <div class="timeline-date"><strong>{item.label}</strong><small>{item.day}<br />{item.time}</small></div>
+                  <div><h3>{item.title}</h3><p>{item.detail}</p></div>
+                  <span class:list={['badge', item.status === 'Disponible' && 'available', item.status === 'Hito' && 'milestone-badge', item.status === 'Feriado' && 'holiday-badge']}>{item.status}</span>
+                </>;
+                return href ? (
+                  <a class:list={classes} href={href} data-kind={item.kind} data-search={`${item.label} ${item.title} ${item.detail}`.toLowerCase()}>{body}</a>
+                ) : (
+                  <div class:list={classes} data-kind={item.kind} data-search={`${item.label} ${item.title} ${item.detail}`.toLowerCase()}>{body}</div>
+                );
+              })}
+            </div>
+          </article>
+        </section>
+      );
+    })}
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Cómo leer esta sección</h2><p>Las clases disponibles tienen una página propia con propósito, conceptos, materiales, actividad y conexión con la siguiente sesión. Las clases futuras se irán habilitando a medida que su diseño quede cerrado.</p></article>
-      <article class="card prose-card"><h2>Versiones vigentes</h2><p>El repositorio mostrará siempre la versión académica vigente de cada material. Las lecturas protegidas se mantendrán en Campus Virtual y desde aquí se enlazarán cuando corresponda.</p></article>
+      <article class="card prose-card"><h2>Estado de publicación</h2><p><strong>Disponible</strong> significa que la sesión ya tiene página propia en el repositorio. <strong>Planificada</strong> indica que el espacio está definido y se habilitará cuando se incorpore su material. Los <strong>Hitos</strong> enlazan a evaluación o proyecto cuando corresponde.</p></article>
+      <article class="card prose-card"><h2>Documentación</h2><p>La arquitectura del sistema ya está preparada para recibir presentaciones, actividades, guías, lecturas e instrucciones. Incorporar documentos no requiere rediseñar el sitio.</p></article>
     </section>
+
+    <script is:inline>
+      (() => {
+        const input = document.getElementById('class-search');
+        const buttons = [...document.querySelectorAll('.filter-pill')];
+        const items = [...document.querySelectorAll('.calendar-item')];
+        const monthSections = [...document.querySelectorAll('.month-section')];
+        const empty = document.getElementById('calendar-empty');
+        let activeFilter = 'all';
+        const normalize = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        const apply = () => {
+          const query = normalize(input?.value);
+          let visible = 0;
+          items.forEach((item) => {
+            const hay = normalize(item.dataset.search);
+            const matchesText = !query || hay.includes(query);
+            const matchesKind = activeFilter === 'all' || item.dataset.kind === activeFilter;
+            const show = matchesText && matchesKind;
+            item.hidden = !show;
+            if (show) visible++;
+          });
+          monthSections.forEach((section) => {
+            const any = [...section.querySelectorAll('.calendar-item')].some((x) => !x.hidden);
+            section.hidden = !any;
+          });
+          if (empty) empty.hidden = visible !== 0;
+        };
+        input?.addEventListener('input', apply);
+        buttons.forEach((button) => button.addEventListener('click', () => {
+          activeFilter = button.dataset.filter || 'all';
+          buttons.forEach((b) => b.classList.toggle('active', b === button));
+          apply();
+        }));
+      })();
+    </script>
   </main>
 </BaseLayout>
