@@ -2,13 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { resourceCategories } from '../data/course';
 import { resources } from '../data/resources';
+import moodleData from '../data/moodle-resources.json';
+
+const moodleResources = (moodleData.items || []).map((item) => ({ ...item, category: 'lecturas' }));
+const allResources = [...resources, ...moodleResources];
+const syncedLabel = moodleData.syncedAt
+  ? new Intl.DateTimeFormat('es-CL', { dateStyle:'medium', timeStyle:'short', timeZone:'America/Santiago' }).format(new Date(moodleData.syncedAt))
+  : 'Pendiente de conexión';
 ---
 <BaseLayout active="recursos" title="Recursos · Teoría de Sistemas">
   <main class="shell">
     <section class="hero compact">
       <div class="eyebrow">Recursos</div>
       <h1>Biblioteca del curso</h1>
-      <p class="lead">La estructura ya está preparada. Los documentos pueden incorporarse posteriormente sin modificar el diseño del sistema.</p>
+      <p class="lead">Los materiales públicos se organizan aquí y las lecturas protegidas de Moodle aparecen automáticamente sin copiar los archivos fuera de Campus Virtual.</p>
+    </section>
+
+    <section class="section">
+      <div class="callout"><strong>Lecturas sincronizadas con Moodle</strong>Todo recurso ubicado en una sección de Moodle cuyo nombre contenga “Lectura” o “Bibliografía” se incorpora al catálogo del repositorio. El archivo permanece protegido en Campus Virtual y se abre allí al seleccionarlo. <span class="meta">Última sincronización: {syncedLabel}.</span></div>
     </section>
 
     <section class="grid-3 section resource-category-grid">
@@ -23,7 +34,7 @@ import { resources } from '../data/resources';
     <section class="card calendar-controls section" aria-label="Buscar y filtrar recursos">
       <div class="calendar-search-wrap">
         <label for="resource-search">Buscar recursos</label>
-        <input id="resource-search" class="repo-search-input" type="search" placeholder="Ej.: EHL, rúbrica, Rich Picture, lectura…" autocomplete="off" />
+        <input id="resource-search" class="repo-search-input" type="search" placeholder="Ej.: Checkland, EHL, rúbrica, Rich Picture, lectura…" autocomplete="off" />
       </div>
       <div class="filter-pills" role="group" aria-label="Categorías de recursos">
         <button class="filter-pill active" type="button" data-filter="all">Todo</button>
@@ -32,9 +43,9 @@ import { resources } from '../data/resources';
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Registro de recursos</h2><span class="card-kicker">LISTO PARA CARGA DOCUMENTAL</span></div>
+      <div class="section-title"><h2>Registro de recursos</h2><span class="card-kicker">BIBLIOTECA CENTRAL</span></div>
       <div class="resource-list" id="resource-list">
-        {resources.map((item) => (
+        {allResources.map((item) => (
           item.href ? (
             <a class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()} href={item.href} target="_blank" rel="noreferrer">
               <div class="resource-icon">{item.type}</div>
@@ -54,8 +65,8 @@ import { resources } from '../data/resources';
     </section>
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Regla de publicación</h2><p>Materiales docentes, guías y documentos públicos pueden alojarse o enlazarse desde el repositorio. Libros, capítulos y otros materiales protegidos se mantienen en Campus Virtual.</p></article>
-      <article class="card prose-card"><h2>Cómo se incorporarán</h2><p>La biblioteca utiliza un registro central. Al agregar un archivo solo se define su categoría, título, descripción, estado y enlace. No es necesario modificar la diagramación ni construir una página nueva.</p></article>
+      <article class="card prose-card"><h2>Lecturas protegidas</h2><p>Los PDFs y textos con restricciones de acceso no se publican en GitHub. El repositorio muestra su título y ubicación; al abrirlos, Moodle aplica la autenticación y permisos institucionales.</p></article>
+      <article class="card prose-card"><h2>Flujo de trabajo</h2><p>Subes la lectura una sola vez en la sección <strong>Lecturas</strong> o <strong>Lecturas protegidas</strong> de Moodle. La sincronización actualiza este catálogo automáticamente y no requiere volver a registrar el documento en el repositorio.</p></article>
     </section>
 
     <script is:inline>
