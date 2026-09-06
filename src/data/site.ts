@@ -6,7 +6,7 @@ export const siteConfig = {
   semesterShort: '2026-2',
   semesterStart: '2026-09-21',
   semesterEnd: '2027-01-16',
-  moodleUrl: '',
-  version: '1.0',
+  moodleUrl: 'https://uvirtual.usach.cl/moodle/course/view.php?id=42361',
+  version: '1.1',
   repositoryLabel: 'Repositorio académico',
 };
