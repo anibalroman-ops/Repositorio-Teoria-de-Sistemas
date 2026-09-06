@@ -1,150 +1,101 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
 const classes = [
-  ['22 SEP', 'El observador y la construcción de sistemas'],
-  ['29 SEP', 'Pensamiento sistémico y situaciones problemáticas'],
-  ['01 OCT', 'Propiedades sistémicas y sistemas relevantes'],
-  ['06 OCT', 'Teorías de sistemas y problemáticas socioambientales'],
+  ['22 SEP', 'El observador y la construcción de sistemas', `${base}clases/22-septiembre/`],
+  ['29 SEP', 'Pensamiento sistémico y situaciones problemáticas', `${base}clases/29-septiembre/`],
+  ['01 OCT', 'Propiedades sistémicas y sistemas relevantes', `${base}clases/01-octubre/`],
+  ['06 OCT', 'Teorías de sistemas y problemáticas socioambientales', `${base}clases/06-octubre/`],
 ];
 const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Diagnosticar','Intervenir'];
 ---
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Repositorio académico del curso Teoría de Sistemas — Ingeniería Civil en Ambiente, USACH." />
-    <title>Teoría de Sistemas · 2026-2</title>
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="shell nav">
-        <a class="brand" href="./">
-          <small>Ingeniería Civil en Ambiente · USACH</small>
-          <strong>Teoría de Sistemas</strong>
-        </a>
-        <nav class="navlinks" aria-label="Navegación principal">
-          <a href="#inicio">Inicio</a>
-          <a href="#curso">Curso</a>
-          <a href="#clases">Clases</a>
-          <a href="#evaluaciones">Evaluaciones</a>
-          <a href="#penaflor">Proyecto Peñaflor</a>
-          <a href="#recursos">Recursos</a>
-        </nav>
-      </div>
-    </header>
+<BaseLayout active="inicio">
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">Sistemas para un territorio sostenible</div>
+      <h1>Teoría de Sistemas</h1>
+      <p class="lead">Pensar sistemas para comprender e intervenir situaciones complejas.</p>
+    </section>
 
-    <main id="inicio" class="shell">
-      <section class="hero">
-        <div class="eyebrow">Sistemas para un territorio sostenible</div>
-        <h1>Teoría de Sistemas</h1>
-        <p class="lead">Pensar sistemas para comprender e intervenir situaciones complejas.</p>
-      </section>
-
-      <section class="grid-main">
-        <article class="card next-class">
-          <div class="card-pad">
-            <div class="card-head">
-              <h2>Próxima clase</h2>
-              <div class="card-kicker">Clase 03</div>
-            </div>
-            <div class="meta">Martes 29 de septiembre · 15:20–18:15</div>
-            <h3>Pensamiento sistémico y situaciones problemáticas</h3>
-            <div class="tags">
-              <span class="tag">Checkland</span>
-              <span class="tag">complejidad</span>
-              <span class="tag">rich picture</span>
-            </div>
-            <div class="meta">Preparar: lectura asignada y actividad previa.</div>
-            <div class="actions">
-              <a class="btn primary" href="#clases">Ver clase →</a>
-              <a class="btn" href="#recursos">Actividad</a>
-              <a class="btn" href="#recursos">Lectura</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-pad">
-            <div class="card-head">
-              <h2>Próximo hito</h2>
-              <div class="card-kicker">Evaluación</div>
-            </div>
-            <h3 style="font-size:1.7rem; margin:18px 0 6px;">E1 · Presentaciones de teorías</h3>
-            <div class="meta">13 de octubre</div>
-            <p class="lead" style="font-size:1.05rem; margin-top:28px;">Una buena pregunta abre más posibilidades que una respuesta.</p>
-          </div>
-        </article>
-      </section>
-
-      <section id="curso" class="card route">
-        <div class="card-head">
-          <h2>Ruta del semestre</h2>
-          <span class="card-kicker">Un recorrido para aprender haciendo</span>
-        </div>
-        <div class="route-line">
-          {route.map((item) => <div class="step">{item}</div>)}
-        </div>
-      </section>
-
-      <section class="grid-lower">
-        <article id="clases" class="card">
-          <div class="card-pad">
-            <div class="card-head"><h2>Clases</h2><span class="card-kicker">Semestre</span></div>
-            <div class="list">
-              {classes.map(([date,title],i) => (
-                <div class:list={["row", i === 1 && "highlight"]}>
-                  <span class="date">{date}</span>
-                  <span>{title}</span>
-                  <span class="status">{i < 2 ? 'Disponible' : 'Próximamente'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </article>
-
-        <article id="evaluaciones" class="card">
-          <div class="card-pad">
-            <div class="card-head"><h2>Evaluaciones</h2><span class="card-kicker">100%</span></div>
-            <div class="list">
-              <div class="row"><span class="date">E1</span><span>Teorías de sistemas</span><span class="status">15%</span></div>
-              <div class="row"><span class="date">E2</span><span>Evaluación individual</span><span class="status">15%</span></div>
-              <div class="row"><span class="date">E3</span><span>Problematización y sistema pertinente</span><span class="status">20%</span></div>
-              <div class="row"><span class="date">E4</span><span>Modelamiento integrado</span><span class="status">20%</span></div>
-              <div class="row"><span class="date">E5</span><span>Diagnóstico e intervención</span><span class="status">20%</span></div>
-              <div class="row"><span class="date">E6</span><span>Evaluación municipal</span><span class="status">10%</span></div>
-            </div>
-          </div>
-        </article>
-
-        <article id="penaflor" class="card project">
-          <div class="card-pad">
-            <div class="card-head"><h2>Proyecto vinculado</h2><span class="card-kicker">Peñaflor</span></div>
-            <h3>Municipalidad de Peñaflor</h3>
-            <p>Desafío: contribuir a una hoja de ruta para la implementación de la Estrategia Hídrica Local y su articulación con el PACCC.</p>
-            <div class="tags">
-              <span class="tag">EHL</span><span class="tag">PACCC</span><span class="tag">Crosswalk</span><span class="tag">Matriz maestra</span>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section id="recursos" class="card" style="margin-bottom:48px;">
+    <section class="grid-main">
+      <article class="card next-class">
         <div class="card-pad">
-          <div class="card-head"><h2>Recursos</h2><span class="card-kicker">Repositorio</span></div>
-          <div class="list">
-            <div class="row"><span class="date">PDF</span><span>Programa oficial</span><span class="status">Documento</span></div>
-            <div class="row"><span class="date">PDF</span><span>Checkland — Pensamiento de sistemas</span><span class="status">Campus Virtual</span></div>
-            <div class="row"><span class="date">GUÍA</span><span>Rich Picture</span><span class="status">Material docente</span></div>
-            <div class="row"><span class="date">CLASE</span><span>Clase 1 — Diseño completo</span><span class="status">Material docente</span></div>
+          <div class="card-head"><h2>Próxima clase</h2><div class="card-kicker">Clase 01</div></div>
+          <div class="meta">Martes 22 de septiembre · 15:20–18:15</div>
+          <h3>El observador y la construcción de sistemas</h3>
+          <div class="tags"><span class="tag">fenómeno</span><span class="tag">observador</span><span class="tag">sistema</span></div>
+          <div class="meta">Inicio del curso · diagnóstico inicial · presentación de E1 y del desafío Peñaflor.</div>
+          <div class="actions">
+            <a class="btn primary" href={`${base}clases/22-septiembre/`}>Ver clase →</a>
+            <a class="btn" href={`${base}clases/`}>Todas las clases</a>
           </div>
         </div>
-      </section>
-    </main>
+      </article>
 
-    <footer class="shell footer">
-      <span>Repositorio del curso · versión 2026-2</span>
-      <span>Universidad de Santiago de Chile · Ingeniería Civil en Ambiente</span>
-    </footer>
-  </body>
-</html>
+      <article class="card">
+        <div class="card-pad">
+          <div class="card-head"><h2>Próximo hito</h2><div class="card-kicker">Evaluación</div></div>
+          <h3 style="font-size:1.7rem; margin:18px 0 6px;">E1 · Presentaciones de teorías</h3>
+          <div class="meta">13 de octubre · 15%</div>
+          <p class="lead" style="font-size:1.05rem; margin-top:28px;">Explicar una teoría como lente para comprender problemas, no como una lista de definiciones.</p>
+          <div class="actions"><a class="btn" href={`${base}evaluaciones/`}>Ver evaluaciones →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <a href={`${base}curso/`} class="card route" style="display:block;">
+      <div class="card-head"><h2>Ruta del semestre</h2><span class="card-kicker">Un recorrido para aprender haciendo</span></div>
+      <div class="route-line">{route.map((item) => <div class="step">{item}</div>)}</div>
+    </a>
+
+    <section class="grid-lower">
+      <article class="card">
+        <div class="card-pad">
+          <div class="card-head"><h2>Clases</h2><a class="card-kicker" href={`${base}clases/`}>Ver todas →</a></div>
+          <div class="list">
+            {classes.map(([date,title,href],i) => (
+              <a class:list={['row', i === 0 && 'highlight']} href={href}>
+                <span class="date">{date}</span><span>{title}</span><span class="status">Disponible</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-pad">
+          <div class="card-head"><h2>Evaluaciones</h2><a class="card-kicker" href={`${base}evaluaciones/`}>100% →</a></div>
+          <div class="list">
+            <div class="row"><span class="date">E1</span><span>Teorías de sistemas</span><span class="status">15%</span></div>
+            <div class="row"><span class="date">E2</span><span>Evaluación individual</span><span class="status">15%</span></div>
+            <div class="row"><span class="date">E3</span><span>Problematización y sistema pertinente</span><span class="status">20%</span></div>
+            <div class="row"><span class="date">E4</span><span>Modelamiento integrado</span><span class="status">20%</span></div>
+            <div class="row"><span class="date">E5</span><span>Diagnóstico e intervención</span><span class="status">20%</span></div>
+            <div class="row"><span class="date">E6</span><span>Evaluación municipal</span><span class="status">10%</span></div>
+          </div>
+        </div>
+      </article>
+
+      <a class="card project" href={`${base}proyecto-penaflor/`}>
+        <div class="card-pad">
+          <div class="card-head"><h2>Proyecto vinculado</h2><span class="card-kicker">Ver proyecto →</span></div>
+          <h3>Municipalidad de Peñaflor</h3>
+          <p>Desafío: contribuir a una hoja de ruta para la implementación de la Estrategia Hídrica Local y su articulación con el PACCC.</p>
+          <div class="tags"><span class="tag">EHL</span><span class="tag">PACCC</span><span class="tag">Crosswalk</span><span class="tag">Matriz maestra</span></div>
+        </div>
+      </a>
+    </section>
+
+    <section class="card section">
+      <div class="card-pad">
+        <div class="card-head"><h2>Recursos</h2><a class="card-kicker" href={`${base}recursos/`}>Ver repositorio →</a></div>
+        <div class="list">
+          <div class="row"><span class="date">PROG</span><span>Programa oficial</span><span class="status">Documento</span></div>
+          <div class="row"><span class="date">LECT</span><span>Checkland — Pensamiento de sistemas</span><span class="status">Campus Virtual</span></div>
+          <div class="row"><span class="date">GUÍA</span><span>Rich Picture</span><span class="status">Material docente</span></div>
+          <div class="row"><span class="date">PROY</span><span>Herramientas EHL–PACCC</span><span class="status">Peñaflor</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

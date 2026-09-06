@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const phases = [
+  ['H0','Comprender el desafío','Reconocer qué está documentado, qué estamos interpretando y qué necesitamos validar.'],
+  ['H1','Contrastar la problematización','Revisar con la contraparte municipal la situación-problema, actores, sistema pertinente y primeras hipótesis.'],
+  ['H2','Contrastar el modelo','Poner a prueba la representación de transformación, arquitectura, información, regulación y dinámica.'],
+  ['H3','Presentar la hoja de ruta','Integrar diagnóstico, prioridades, secuencia, responsables, indicadores y recomendaciones.'],
+];
+---
+<BaseLayout active="penaflor" title="Proyecto Peñaflor · Teoría de Sistemas">
+  <main class="shell">
+    <section class="hero compact">
+      <div class="eyebrow">Proyecto vinculado</div>
+      <h1>Municipalidad de Peñaflor</h1>
+      <p class="lead">Un desafío auténtico para aplicar pensamiento sistémico a la implementación y articulación de instrumentos de gestión hídrica y cambio climático.</p>
+    </section>
+
+    <section class="section">
+      <article class="card prose-card project">
+        <div class="card-kicker">Pregunta orientadora</div>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.7rem);margin-top:12px;">¿Cómo transformar la EHL y su relación con el PACCC en una hoja de ruta implementable, coherente con las facultades, capacidades, procesos, información, restricciones y relaciones reales de la Municipalidad de Peñaflor?</h2>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Seis capas de análisis</h2><p>La hoja de ruta no se reduce a ordenar proyectos: requiere comprender cómo una acción escrita puede transformarse en acción municipal realizable.</p></div>
+      <div class="grid-3">
+        <article class="card phase"><h3>1 · Articulación semántica</h3><p>Qué significa cada acción y si EHL y PACCC utilizan conceptos compatibles.</p></article>
+        <article class="card phase"><h3>2 · Articulación instrumental</h3><p>Cómo se relacionan objetivos, medidas, proyectos, indicadores y mecanismos de seguimiento.</p></article>
+        <article class="card phase"><h3>3 · Facultades y roles</h3><p>Quién puede decidir, ejecutar, coordinar, fiscalizar, financiar o apoyar.</p></article>
+        <article class="card phase"><h3>4 · Capacidades</h3><p>Qué recursos, conocimientos, procesos, datos y apoyos requiere la implementación.</p></article>
+        <article class="card phase"><h3>5 · Dependencias y secuencia</h3><p>Qué condiciones habilitan otras acciones y qué debe ocurrir primero.</p></article>
+        <article class="card phase"><h3>6 · Gobernanza y seguimiento</h3><p>Cómo circulará la información, se tomarán decisiones y se corregirán desviaciones.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Hitos de trabajo con la contraparte</h2><span class="card-kicker">Proceso iterativo</span></div>
+      <div class="grid-2">
+        {phases.map(([code,title,desc]) => <article class="card phase"><div class="card-kicker">{code}</div><h3>{title}</h3><p>{desc}</p></article>)}
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card prose-card"><h2>Equipos complementarios</h2><p><strong>A.</strong> Gestión, selección y priorización de la cartera EHL.</p><p><strong>B.</strong> Coordinación institucional y capacidades municipales.</p><p><strong>C.</strong> Información, seguimiento y articulación EHL–PACCC.</p></article>
+      <article class="card prose-card"><h2>Herramientas comunes</h2><div class="tags"><span class="tag">Rich Picture</span><span class="tag">Crosswalk EHL–PACCC</span><span class="tag">CATWOE / TAPCID</span><span class="tag">Caja negra</span><span class="tag">Matriz maestra</span><span class="tag">Diagnóstico sistémico</span></div><p>Los tres equipos utilizan la misma arquitectura conceptual y luego integran sus hallazgos en un único producto municipal.</p></article>
+    </section>
+  </main>
+</BaseLayout>

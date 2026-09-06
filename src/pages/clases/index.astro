@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+const classes = [
+  {date:'22 SEP', title:'El observador y la construcción de sistemas', detail:'Fenómeno · observador · sistema · diagnóstico inicial', status:'Disponible', href:`${base}clases/22-septiembre/`},
+  {date:'29 SEP', title:'Pensamiento sistémico y situaciones problemáticas', detail:'Checkland · complejidad · movimiento de sistemas · rich picture', status:'Disponible', href:`${base}clases/29-septiembre/`, current:true},
+  {date:'01 OCT', title:'Propiedades sistémicas y sistemas relevantes', detail:'Emergencia · jerarquía · información · control · definición raíz', status:'Disponible', href:`${base}clases/01-octubre/`},
+  {date:'06 OCT', title:'Teorías de sistemas y problemáticas socioambientales', detail:'Información · cibernética · dinámica de sistemas · invitada GORE RM', status:'Disponible', href:`${base}clases/06-octubre/`},
+  {date:'08 OCT', title:'Delimitación y comprensión del desafío Peñaflor', detail:'Conversación · acuerdos · evidencia · preguntas sistémicas', status:'En diseño'},
+  {date:'13 OCT', title:'E1 · Presentaciones de teorías de sistemas', detail:'Aplicación, mecanismo, alcance y límites de cada teoría', status:'Hito'},
+  {date:'20 OCT', title:'Transformación y caracterización del sistema', detail:'Caja negra · inputs/outputs · CATWOE/TAPCID', status:'Planificada'},
+  {date:'27 OCT', title:'E2 · Evaluación individual', detail:'Transferencia a mini-casos socioambientales', status:'Hito'},
+];
+---
+<BaseLayout active="clases" title="Clases · Teoría de Sistemas">
+  <main class="shell">
+    <section class="hero compact">
+      <div class="eyebrow">Clases</div>
+      <h1>El semestre, clase a clase</h1>
+      <p class="lead">Cada sesión conecta conceptos, herramientas y actividades con la progresión general del razonamiento sistémico.</p>
+    </section>
+
+    <section class="section">
+      <article class="card prose-card">
+        <div class="card-head"><h2>Inicio del semestre</h2><span class="card-kicker">Septiembre · Octubre</span></div>
+        <div class="timeline">
+          {classes.map((item) => (
+            item.href ? <a class:list={['timeline-item', item.current && 'current']} href={item.href}>
+              <div class="timeline-date">{item.date}</div>
+              <div><h3>{item.title}</h3><p>{item.detail}</p></div>
+              <span class:list={['badge', item.status === 'Disponible' && 'available']}>{item.status}</span>
+            </a> : <div class="timeline-item">
+              <div class="timeline-date">{item.date}</div>
+              <div><h3>{item.title}</h3><p>{item.detail}</p></div>
+              <span class="badge">{item.status}</span>
+            </div>
+          ))}
+        </div>
+      </article>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card prose-card"><h2>Cómo leer esta sección</h2><p>Las clases disponibles tienen una página propia con propósito, conceptos, materiales, actividad y conexión con la siguiente sesión. Las clases futuras se irán habilitando a medida que su diseño quede cerrado.</p></article>
+      <article class="card prose-card"><h2>Versiones vigentes</h2><p>El repositorio mostrará siempre la versión académica vigente de cada material. Las lecturas protegidas se mantendrán en Campus Virtual y desde aquí se enlazarán cuando corresponda.</p></article>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+const {
+  title = 'Teoría de Sistemas · 2026-2',
+  description = 'Repositorio académico del curso Teoría de Sistemas — Ingeniería Civil en Ambiente, USACH.',
+  active = ''
+} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const navItems = [
+  ['inicio', 'Inicio', base],
+  ['curso', 'Curso', `${base}curso/`],
+  ['clases', 'Clases', `${base}clases/`],
+  ['evaluaciones', 'Evaluaciones', `${base}evaluaciones/`],
+  ['penaflor', 'Proyecto Peñaflor', `${base}proyecto-penaflor/`],
+  ['recursos', 'Recursos', `${base}recursos/`],
+];
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0c6164" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell nav">
+        <a class="brand" href={base} aria-label="Ir al inicio">
+          <small>Ingeniería Civil en Ambiente · USACH</small>
+          <strong>Teoría de Sistemas</strong>
+        </a>
+        <nav class="navlinks" aria-label="Navegación principal">
+          {navItems.map(([id,label,href]) => (
+            <a class:list={[active === id && 'active']} href={href}>{label}</a>
+          ))}
+        </nav>
+        <span class="moodle-link" title="El enlace al Campus Virtual se configurará en la siguiente etapa">Campus Virtual ↗</span>
+      </div>
+    </header>
+    <slot />
+    <footer class="shell footer">
+      <span>Repositorio del curso · versión 2026-2</span>
+      <span>Universidad de Santiago de Chile · Ingeniería Civil en Ambiente</span>
+    </footer>
+  </body>
+</html>
