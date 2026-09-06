@@ -1,13 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const resources = [
-  ['PROG','Programa oficial','Programa institucional de la asignatura','Documento oficial'],
-  ['PDF','Checkland — Pensamiento de sistemas, práctica de sistemas','Lectura base para pensamiento sistémico y SSM','Campus Virtual'],
-  ['LIBRO','Clayton & Radcliffe — Sustainability: A Systems Approach','Lectura para sustentabilidad desde un enfoque sistémico','Campus Virtual'],
-  ['GUÍA','Rich Picture','Orientaciones para representar situaciones problemáticas','Material docente'],
-  ['GUÍA','Caja negra y transformación','Herramienta para modelar transformación, entradas y salidas','Material docente'],
-  ['MATRIZ','Crosswalk EHL–PACCC','Matriz para analizar relaciones entre instrumentos','Proyecto Peñaflor'],
-  ['MATRIZ','Matriz maestra de implementabilidad','Evidencia, roles, capacidades, dependencias, riesgos e indicadores','Proyecto Peñaflor'],
+  ['PROG','Programa oficial','Programa institucional de la asignatura','Documento oficial',null],
+  ['PDF','Checkland — Pensamiento de sistemas, práctica de sistemas','Lectura base para pensamiento sistémico y SSM','Campus Virtual',null],
+  ['LIBRO','Clayton & Radcliffe — Sustainability: A Systems Approach','Lectura para sustentabilidad desde un enfoque sistémico','Campus Virtual',null],
+  ['DIAG','Diagnóstico inicial','Línea base individual: fenómeno, observador, sistema e incertidumbre','Google Drive','https://drive.google.com/file/d/1tG5LsTXpCXaOZ-mW0VCaVK5L53XiayGT/view?usp=drivesdk'],
+  ['GUÍA','Rich Picture · Estero Los Aromos','Actividad grupal de exploración sistémica del 29 de septiembre','Google Drive','https://drive.google.com/file/d/1lax6RqMukfXO-irAZij1H73NaI6h-qdj/view?usp=drivesdk'],
+  ['DIAG','Problemas complejos','Diagnóstico individual previo al trabajo formal con Checkland','Google Drive','https://drive.google.com/file/d/1-PlCDieYE77lKWAKiqjCI1b8erMdppn3/view?usp=drivesdk'],
+  ['GUÍA','Del Rich Picture a Sistemas Relevantes','Actividad grupal sobre emergencia, niveles, información, control y definición raíz','Google Drive','https://drive.google.com/file/d/1PerGlamGYHzMkSnYwfuJhj81zxdti17a/view?usp=drivesdk'],
+  ['DIAG','Propiedades sistémicas','Diagnóstico individual de emergencia, niveles, información y sistemas relevantes','Google Drive','https://drive.google.com/file/d/1-QYFOoyg08m8N2p2-qlpeAU19pA_dOvE/view?usp=drivesdk'],
+  ['GUÍA','Caja negra y transformación','Herramienta para modelar transformación, entradas y salidas','Planificada',null],
+  ['MATRIZ','Crosswalk EHL–PACCC','Matriz para analizar relaciones entre instrumentos','Proyecto Peñaflor',null],
+  ['MATRIZ','Matriz maestra de implementabilidad','Evidencia, roles, capacidades, dependencias, riesgos e indicadores','Proyecto Peñaflor',null],
 ];
 ---
 <BaseLayout active="recursos" title="Recursos · Teoría de Sistemas">
@@ -19,18 +23,26 @@ const resources = [
     </section>
 
     <section class="section">
-      <div class="callout"><strong>Regla del repositorio</strong>Los materiales de elaboración docente pueden alojarse directamente aquí. Los libros, capítulos y artículos protegidos se mantendrán en Campus Virtual y serán enlazados desde esta página.</div>
+      <div class="callout"><strong>Regla del repositorio</strong>Los materiales de elaboración docente pueden alojarse o enlazarse directamente desde aquí. Los libros, capítulos y artículos protegidos se mantendrán en Campus Virtual.</div>
     </section>
 
     <section class="section">
       <div class="section-title"><h2>Recursos disponibles y planificados</h2><span class="card-kicker">Versión 2026-2</span></div>
       <div class="resource-list">
-        {resources.map(([type,title,desc,status]) => (
-          <article class="resource-item">
-            <div class="resource-icon">{type}</div>
-            <div><strong>{title}</strong><small>{desc}</small></div>
-            <span class="status">{status}</span>
-          </article>
+        {resources.map(([type,title,desc,status,href]) => (
+          href ? (
+            <a class="resource-item" href={href} target="_blank" rel="noreferrer">
+              <div class="resource-icon">{type}</div>
+              <div><strong>{title}</strong><small>{desc}</small></div>
+              <span class="status">{status} ↗</span>
+            </a>
+          ) : (
+            <article class="resource-item">
+              <div class="resource-icon">{type}</div>
+              <div><strong>{title}</strong><small>{desc}</small></div>
+              <span class="status">{status}</span>
+            </article>
+          )
         ))}
       </div>
     </section>
