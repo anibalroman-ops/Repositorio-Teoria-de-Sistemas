@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
 
 permissions:
   contents: read
@@ -28,6 +30,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Sync protected readings from Moodle
+        env:
+          MOODLE_BASE_URL: https://uvirtual.usach.cl/moodle
+          MOODLE_COURSE_ID: '42361'
+          MOODLE_READING_SECTIONS: lectura,lecturas,bibliografia,bibliografía
+          MOODLE_TOKEN: ${{ secrets.MOODLE_TOKEN }}
+        run: node scripts/sync-moodle-readings.mjs
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
