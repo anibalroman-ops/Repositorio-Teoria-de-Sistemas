@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const route = ['Observar','Problematizar','Distinguir','Modelar','Explicar','Diagnosticar','Intervenir'];
+---
+<BaseLayout active="curso" title="Curso · Teoría de Sistemas">
+  <main class="shell">
+    <section class="hero compact">
+      <div class="eyebrow">El curso</div>
+      <h1>Comprender sistemas complejos para intervenir con sentido</h1>
+      <p class="lead">La asignatura articula pensamiento sistémico, modelamiento y sustentabilidad para abordar situaciones socioambientales complejas desde la Ingeniería Civil en Ambiente.</p>
+    </section>
+
+    <section class="grid-3 section">
+      <article class="card stat"><strong>6 SCT</strong><span>Asignatura teórico-práctica</span></article>
+      <article class="card stat"><strong>2026-2</strong><span>21 septiembre 2026 · 16 enero 2027</span></article>
+      <article class="card stat"><strong>2</strong><span>Sesiones semanales · martes y jueves</span></article>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Resultado de aprendizaje general</h2><span class="card-kicker">Programa oficial</span></div>
+      <article class="card prose-card">
+        <p style="font-family:Georgia,serif;font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.45;color:var(--ink);margin:0;">“Analizar sistemas complejos en el ámbito de la ingeniería civil en ambiente mediante la aplicación rigurosa del pensamiento sistémico, integrando información diversa, liderando procesos colaborativos de diseño y aprendizaje autónomo, comunicando resultados de forma clara y efectiva, tanto oral como escrita.”</p>
+      </article>
+    </section>
+
+    <section class="card route section">
+      <div class="card-head"><h2>Ruta del aprendizaje</h2><span class="card-kicker">Progresión del semestre</span></div>
+      <div class="route-line">{route.map((item) => <div class="step">{item}</div>)}</div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Seis macrocapacidades</h2><p>La reingeniería curricular organiza contenidos y habilidades en capacidades amplias que reaparecen y se profundizan durante el semestre.</p></div>
+      <div class="grid-3">
+        <article class="card phase"><div class="card-kicker">MC1</div><h3>Problematizar</h3><p>Construir una comprensión sistémica de situaciones complejas considerando actores, relaciones, perspectivas y evidencia.</p></article>
+        <article class="card phase"><div class="card-kicker">MC2</div><h3>Distinguir y delimitar</h3><p>Definir sistemas pertinentes, propósito, límites, entorno y perspectivas de observación.</p></article>
+        <article class="card phase"><div class="card-kicker">MC3</div><h3>Modelar</h3><p>Representar transformaciones, componentes, relaciones y arquitectura de sistemas.</p></article>
+        <article class="card phase"><div class="card-kicker">MC4</div><h3>Explicar</h3><p>Comprender información, regulación, decisiones, retroalimentación y comportamiento.</p></article>
+        <article class="card phase"><div class="card-kicker">MC5</div><h3>Diagnosticar</h3><p>Integrar perspectivas y modelos para explicar brechas, mecanismos y condiciones de viabilidad.</p></article>
+        <article class="card phase"><div class="card-kicker">MC6</div><h3>Intervenir</h3><p>Diseñar, comparar y justificar alternativas sistémicamente coherentes y sustentables.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Cómo trabajaremos</h2><p>El curso combina estudio conceptual, discusión, casos, modelamiento, trabajo colaborativo y un desafío auténtico vinculado a la Municipalidad de Peñaflor.</p></div>
+      <div class="grid-2">
+        <article class="card prose-card"><h2>Aprender haciendo</h2><p>Las herramientas se introducen, aplican de manera guiada, se contrastan en situaciones reales y luego se formalizan. El error y la revisión son parte del proceso de construcción del razonamiento sistémico.</p></article>
+        <article class="card prose-card"><h2>Evaluación alineada</h2><p>Las evaluaciones progresan desde la comprensión de teorías hacia la problematización, el modelamiento, el diagnóstico y la intervención. La evaluación municipal aporta una mirada externa sobre pertinencia y utilidad profesional.</p></article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
