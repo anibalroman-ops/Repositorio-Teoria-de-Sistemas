@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+const { code, date, duration, title, subtitle, concepts = [], learn = [], activityTitle, activityText, after = [], materials = [], nextTitle, nextHref } = Astro.props;
+---
+<BaseLayout active="clases" title={`${title} · Teoría de Sistemas`}>
+  <main class="shell">
+    <section class="hero compact">
+      <div class="breadcrumb"><a href={base}>Inicio</a><span>›</span><a href={`${base}clases/`}>Clases</a><span>›</span><span>{code}</span></div>
+      <div class="eyebrow">{code} · {date} · {duration}</div>
+      <h1>{title}</h1>
+      <p class="lead">{subtitle}</p>
+      <div class="tags">{concepts.map((item) => <span class="tag">{item}</span>)}</div>
+    </section>
+
+    <div class="content-wrap">
+      <div class="content-main">
+        <article class="card prose-card">
+          <h2>Hoy aprenderemos</h2>
+          <ul>{learn.map((item) => <li>{item}</li>)}</ul>
+
+          <h2>Actividad central</h2>
+          <div class="callout"><strong>{activityTitle}</strong>{activityText}</div>
+
+          <h2>Después de esta clase deberías poder…</h2>
+          <ul>{after.map((item) => <li>{item}</li>)}</ul>
+        </article>
+      </div>
+
+      <aside class="sidebar">
+        <article class="card card-pad">
+          <div class="card-head"><h2>Materiales</h2><span class="card-kicker">Clase</span></div>
+          <div class="resource-list">
+            {materials.map(([type,name,status]) => <div class="resource-item"><div class="resource-icon">{type}</div><div><strong>{name}</strong><small>{status}</small></div></div>)}
+          </div>
+        </article>
+        {nextTitle && <article class="card card-pad"><div class="card-kicker">Siguiente clase</div><h3 style="font-size:1.4rem;margin:8px 0 14px;">{nextTitle}</h3>{nextHref ? <a class="btn primary" href={`${base}${nextHref}`}>Continuar →</a> : <span class="badge">En preparación</span>}</article>}
+      </aside>
+    </div>
+  </main>
+</BaseLayout>
