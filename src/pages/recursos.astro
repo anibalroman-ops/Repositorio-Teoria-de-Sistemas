@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const resources = [
+  ['PROG','Programa oficial','Programa institucional de la asignatura','Documento oficial'],
+  ['PDF','Checkland — Pensamiento de sistemas, práctica de sistemas','Lectura base para pensamiento sistémico y SSM','Campus Virtual'],
+  ['LIBRO','Clayton & Radcliffe — Sustainability: A Systems Approach','Lectura para sustentabilidad desde un enfoque sistémico','Campus Virtual'],
+  ['GUÍA','Rich Picture','Orientaciones para representar situaciones problemáticas','Material docente'],
+  ['GUÍA','Caja negra y transformación','Herramienta para modelar transformación, entradas y salidas','Material docente'],
+  ['MATRIZ','Crosswalk EHL–PACCC','Matriz para analizar relaciones entre instrumentos','Proyecto Peñaflor'],
+  ['MATRIZ','Matriz maestra de implementabilidad','Evidencia, roles, capacidades, dependencias, riesgos e indicadores','Proyecto Peñaflor'],
+];
+---
+<BaseLayout active="recursos" title="Recursos · Teoría de Sistemas">
+  <main class="shell">
+    <section class="hero compact">
+      <div class="eyebrow">Recursos</div>
+      <h1>Biblioteca del curso</h1>
+      <p class="lead">Un punto único para localizar materiales docentes, herramientas, lecturas y documentos del proyecto vinculado.</p>
+    </section>
+
+    <section class="section">
+      <div class="callout"><strong>Regla del repositorio</strong>Los materiales de elaboración docente pueden alojarse directamente aquí. Los libros, capítulos y artículos protegidos se mantendrán en Campus Virtual y serán enlazados desde esta página.</div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Recursos disponibles y planificados</h2><span class="card-kicker">Versión 2026-2</span></div>
+      <div class="resource-list">
+        {resources.map(([type,title,desc,status]) => (
+          <article class="resource-item">
+            <div class="resource-icon">{type}</div>
+            <div><strong>{title}</strong><small>{desc}</small></div>
+            <span class="status">{status}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section grid-3">
+      <article class="card phase"><h3>Lecturas</h3><p>Textos base y complementarios organizados según la progresión conceptual del curso.</p></article>
+      <article class="card phase"><h3>Herramientas</h3><p>Guías operativas para problematizar, distinguir, modelar, diagnosticar e intervenir.</p></article>
+      <article class="card phase"><h3>Proyecto Peñaflor</h3><p>Instrumentos públicos, matrices de análisis y productos de trabajo vinculados a EHL y PACCC.</p></article>
+    </section>
+  </main>
+</BaseLayout>
