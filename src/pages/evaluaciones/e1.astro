@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { e1, e1WhatIsAssessed, e1Milestone, e1Structure, e1Topics, e1Rubric } from '../../data/e1';
-import { siteConfig } from '../../data/site';
+import { e1, e1Files, e1WhatIsAssessed, e1Milestone, e1Structure, e1Topics, e1Rubric } from '../../data/e1';
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout active="evaluaciones" title="E1 · Presentación de Teorías de Sistemas">
@@ -16,6 +15,21 @@ const base = import.meta.env.BASE_URL;
       <article class="card stat"><strong>13 OCT</strong><span>fecha de presentación</span></article>
       <article class="card stat"><strong>15 min</strong><span>duración · tolerancia {e1.tolerance}</span></article>
       <article class="card stat"><strong>21 pts</strong><span>exigencia {e1.requirement}</span></article>
+    </section>
+
+    <section class="section">
+      <article class="card e1-download-card">
+        <div>
+          <div class="card-kicker">DOCUMENTOS OFICIALES · ACCESO USACH</div>
+          <h2>Instrucciones y rúbrica de E1</h2>
+          <p>Descarga la versión oficial en PDF o el archivo DOCX. El acceso utiliza Google Drive institucional y puede solicitar inicio de sesión con tu cuenta USACH.</p>
+        </div>
+        <div class="download-actions">
+          <a class="btn primary" href={e1Files.pdfDownloadHref} target="_blank" rel="noreferrer">Descargar PDF ↓</a>
+          <a class="btn" href={e1Files.docxDownloadHref} target="_blank" rel="noreferrer">Descargar DOCX ↓</a>
+          <a class="text-action" href={e1Files.pdfViewHref} target="_blank" rel="noreferrer">Ver PDF en línea ↗</a>
+        </div>
+      </article>
     </section>
 
     <section class="section grid-2">
@@ -65,8 +79,17 @@ const base = import.meta.env.BASE_URL;
           <article class="card theory-card">
             <div class="card-kicker">TEMA {topic.number}</div>
             <h3>{topic.theory}</h3>
-            <ol>{topic.readings.map((reading) => <li>{reading}</li>)}</ol>
-            <a class="btn" href={siteConfig.moodleUrl} target="_blank" rel="noreferrer">Abrir lecturas en Campus Virtual ↗</a>
+            <ol class="theory-readings">
+              {topic.readings.map((reading) => (
+                <li>
+                  <span>{reading.citation}</span>
+                  <span class="reading-actions">
+                    <a href={reading.viewHref} target="_blank" rel="noreferrer">Ver ↗</a>
+                    <a href={reading.downloadHref} target="_blank" rel="noreferrer">Descargar PDF ↓</a>
+                  </span>
+                </li>
+              ))}
+            </ol>
           </article>
         ))}
       </div>
@@ -109,7 +132,7 @@ const base = import.meta.env.BASE_URL;
       </article>
       <article class="card prose-card">
         <h2>Materiales relacionados</h2>
-        <p>La biblioteca del curso contiene las tres lecturas iniciales y las seis lecturas específicas de E1, organizadas por teoría.</p>
+        <p>La biblioteca del curso contiene las tres lecturas iniciales y las seis lecturas específicas de E1, con acceso institucional individual a cada archivo.</p>
         <a class="btn" href={`${base}recursos/`}>Ir a Lecturas y Recursos →</a>
       </article>
     </section>
@@ -162,9 +185,23 @@ const base = import.meta.env.BASE_URL;
       padding:20px;
     }
     .theory-card h3{margin:.45rem 0 .55rem;line-height:1.2}
-    .theory-card ol{padding-left:1.15rem;margin:.35rem 0 1rem}
-    .theory-card li{margin:.65rem 0;line-height:1.5}
-    .theory-card .btn{margin-top:auto;align-self:flex-start}
+    .e1-download-card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:28px;
+      padding:20px 22px;
+    }
+    .e1-download-card h2{margin:.35rem 0 .35rem;font-size:1.15rem}
+    .e1-download-card p{margin:0;max-width:760px;color:var(--muted);font-size:.82rem}
+    .download-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;min-width:330px}
+    .text-action{font-size:.72rem;font-weight:750;color:var(--teal);padding:8px 4px;white-space:nowrap}
+    .theory-card ol{padding-left:1.15rem;margin:.35rem 0 0}
+    .theory-card li{margin:.75rem 0;line-height:1.5}
+    .theory-readings li>span:first-child{display:block}
+    .reading-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}
+    .reading-actions a{font-size:.7rem;font-weight:800;color:var(--teal);text-decoration:none}
+    .reading-actions a:hover{text-decoration:underline}
     .section-note{max-width:920px;color:var(--muted);font-size:.82rem}
     .e1-structure{display:grid;gap:10px}
     .structure-row{display:grid;grid-template-columns:90px 1fr;gap:20px;align-items:center;padding:16px 20px}
@@ -189,6 +226,8 @@ const base = import.meta.env.BASE_URL;
       .structure-row{grid-template-columns:1fr;gap:6px}
       .expectation-grid{grid-template-columns:1fr}
       .expectation-item{grid-template-columns:36px minmax(0,1fr);padding:14px 15px}
+      .e1-download-card{flex-direction:column;align-items:flex-start}
+      .download-actions{justify-content:flex-start;min-width:0}
       .theory-card{min-height:auto}
     }
   </style>
