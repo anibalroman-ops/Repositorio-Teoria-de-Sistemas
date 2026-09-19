@@ -12,9 +12,9 @@ El sitio funciona como **repositorio académico**, no como LMS.
 
 ## Estado
 
-**v1.3-rc1 — alineamiento curricular 2026-2 en rama de trabajo.**
+**v1.4 — alineamiento curricular y primeras sesiones 2026-2.**
 
-La arquitectura web se conserva y la rama `actualizacion-curricular-2026-2` alinea calendario y Proyecto Peñaflor con el diseño curricular vigente. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
+La arquitectura web se conserva y el repositorio alinea calendario, Proyecto Peñaflor y las primeras seis sesiones con el diseño curricular vigente. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
 
 ## Estructura principal
 
