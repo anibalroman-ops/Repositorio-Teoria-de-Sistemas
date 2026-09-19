@@ -12,9 +12,9 @@ El sitio funciona como **repositorio académico**, no como LMS.
 
 ## Estado
 
-**v1.0 — sistema funcional completo.**
+**v1.3-rc1 — alineamiento curricular 2026-2 en rama de trabajo.**
 
-La arquitectura, navegación, calendario, búsqueda, evaluaciones, proyecto Peñaflor, biblioteca de recursos y comportamiento responsive están preparados. La documentación puede incorporarse posteriormente sin rediseñar el sistema.
+La arquitectura web se conserva y la rama `actualizacion-curricular-2026-2` alinea calendario y Proyecto Peñaflor con el diseño curricular vigente. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
 
 ## Estructura principal
 
@@ -22,6 +22,7 @@ La arquitectura, navegación, calendario, búsqueda, evaluaciones, proyecto Peñ
 src/
 ├── data/
 │   ├── course.ts       # calendario, evaluaciones, ruta y categorías
+│   ├── project.ts      # arquitectura vigente del Proyecto Peñaflor
 │   ├── resources.ts    # registro central de recursos/documentos
 │   └── site.ts         # configuración global y enlace Moodle
 ├── layouts/
