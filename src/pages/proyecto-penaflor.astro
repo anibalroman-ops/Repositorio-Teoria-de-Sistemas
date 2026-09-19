@@ -1,7 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { projectMilestones } from '../data/course';
+import {
+  cohortArchitecture,
+  municipalChallenge,
+  inquiryQuestion,
+  rotatingRoles,
+  analyticFronts,
+  projectStages,
+  projectRules,
+} from '../data/project';
 const base = import.meta.env.BASE_URL;
+
 const layers = [
   ['01','Articulación semántica','Qué significa cada acción y si EHL y PACCC utilizan conceptos compatibles.'],
   ['02','Articulación instrumental','Cómo se relacionan objetivos, medidas, proyectos, indicadores y mecanismos de seguimiento.'],
@@ -10,26 +20,62 @@ const layers = [
   ['05','Dependencias y secuencia','Qué condiciones habilitan otras acciones y qué debe ocurrir primero.'],
   ['06','Gobernanza y seguimiento','Cómo circulará la información, se tomarán decisiones y se corregirán desviaciones.'],
 ];
-const teams = [
-  ['A','Gestión, selección y priorización','Cartera EHL · criterios · dependencias · prioridades'],
-  ['B','Coordinación institucional y capacidades','Roles · facultades · capacidades · restricciones'],
-  ['C','Información, seguimiento y articulación','Datos · indicadores · decisiones · EHL–PACCC'],
-];
 ---
 <BaseLayout active="penaflor" title="Proyecto Peñaflor · Teoría de Sistemas">
   <main class="shell">
     <section class="hero compact">
       <div class="eyebrow">Proyecto vinculado</div>
       <h1>Municipalidad de Peñaflor</h1>
-      <p class="lead">Un espacio de aplicación auténtica para transformar conocimiento sistémico en una propuesta profesional de implementación.</p>
+      <p class="lead">Un proyecto longitudinal para aprender a problematizar, modelar, diagnosticar e intervenir sistémicamente a partir de un desafío hídrico territorial real.</p>
+    </section>
+
+    <section class="grid-3 section semester-stats">
+      <article class="card stat"><strong>{cohortArchitecture.cohortSize}</strong><span>estudiantes en la cohorte 2026-2</span></article>
+      <article class="card stat"><strong>{cohortArchitecture.permanentTeams}</strong><span>equipo permanente de proyecto</span></article>
+      <article class="card stat"><strong>{cohortArchitecture.integratedProducts}</strong><span>producto longitudinal integrado</span></article>
     </section>
 
     <section class="section">
       <article class="card project-question">
-        <div class="card-kicker">PREGUNTA ORIENTADORA</div>
-        <h2>¿Cómo transformar la EHL y su relación con el PACCC en una hoja de ruta implementable, coherente con las facultades, capacidades, procesos, información, restricciones y relaciones reales de la Municipalidad de Peñaflor?</h2>
+        <div class="card-kicker">{municipalChallenge.label}</div>
+        <h2>{municipalChallenge.title}</h2>
+        <p>{municipalChallenge.note}</p>
         <div class="tags"><span class="tag">EHL</span><span class="tag">PACCC</span><span class="tag">implementabilidad</span><span class="tag">hoja de ruta</span></div>
       </article>
+    </section>
+
+    <section class="section">
+      <article class="card project-question">
+        <div class="card-kicker">{inquiryQuestion.label}</div>
+        <h2>{inquiryQuestion.title}</h2>
+        <p><strong>Regla de trabajo:</strong> la situación-problema, el sistema pertinente, sus límites y las intervenciones no se consideran dados de antemano; deben construirse y justificarse a partir de evidencia, perspectivas y contraste.</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Un equipo, responsabilidades rotativas</h2><p>{cohortArchitecture.principle}</p></div>
+      <div class="grid-3">
+        {rotatingRoles.map((role) => (
+          <article class="card team-card">
+            <span class="team-code">{role.code}</span>
+            <h3>{role.title}</h3>
+            <p>{role.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Tres frentes analíticos, no tres equipos</h2><p>Los frentes permiten distribuir temporalmente la exploración. Los hallazgos deben volver al producto común y las responsabilidades se rotan.</p></div>
+      <div class="grid-3">
+        {analyticFronts.map((front) => (
+          <article class="card phase">
+            <div class="card-kicker">FRENTE {front.code}</div>
+            <h3>{front.title}</h3>
+            <p>{front.desc}</p>
+          </article>
+        ))}
+      </div>
     </section>
 
     <section class="section">
@@ -40,14 +86,24 @@ const teams = [
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Tres equipos, un producto</h2><p>Los equipos profundizan componentes diferentes del mismo problema y luego integran sus hallazgos en una única hoja de ruta.</p></div>
-      <div class="grid-3">
-        {teams.map(([code,title,desc]) => <article class="card team-card"><span class="team-code">{code}</span><h3>{title}</h3><p>{desc}</p></article>)}
+      <div class="section-title"><h2>Trayectoria longitudinal del proyecto</h2><span class="card-kicker">UN PRODUCTO · VERSIONES SUCESIVAS</span></div>
+      <div class="project-timeline">
+        {projectStages.map((item, index) => (
+          <article class="card milestone-card">
+            <div class="milestone-index">{String(index + 1).padStart(2,'0')}</div>
+            <div>
+              <div class="card-kicker">{item.code} · {item.date}</div>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+            <span class="badge">Proceso</span>
+          </article>
+        ))}
       </div>
     </section>
 
     <section class="section">
-      <div class="section-title"><h2>Hitos con la contraparte</h2><span class="card-kicker">PROCESO ITERATIVO</span></div>
+      <div class="section-title"><h2>Hitos con la contraparte</h2><span class="card-kicker">CONTRASTE AUTÉNTICO</span></div>
       <div class="project-timeline">
         {projectMilestones.map((item, index) => (
           <article class="card milestone-card">
@@ -64,17 +120,29 @@ const teams = [
     </section>
 
     <section class="section project-workflow">
-      <div class="section-title"><h2>Flujo de trabajo</h2><span class="card-kicker">MISMA LÓGICA PARA LOS TRES EQUIPOS</span></div>
+      <div class="section-title"><h2>Principio de trabajo</h2><span class="card-kicker">DIVERGIR ANTES DE CONVERGER</span></div>
       <div class="workflow-line">
-        <span>Evidencia</span><i>→</i><span>Interpretación</span><i>→</i><span>Mecanismo</span><i>→</i><span>Brecha</span><i>→</i><span>Intervención</span><i>→</i><span>Prioridad</span><i>→</i><span>Hoja de ruta</span>
+        <span>Alternativas</span><i>→</i><span>Contraste</span><i>→</i><span>Consecuencias</span><i>→</i><span>Convergencia</span><i>→</i><span>Decisión justificada</span><i>→</i><span>Registro</span>
       </div>
     </section>
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Herramientas comunes</h2><div class="tags"><span class="tag">Rich Picture</span><span class="tag">Crosswalk EHL–PACCC</span><span class="tag">CATWOE / TAPCID</span><span class="tag">Caja negra</span><span class="tag">Matriz maestra</span><span class="tag">Diagnóstico sistémico</span></div><p>El repositorio funciona como puerta de entrada a estas herramientas. Sus archivos se incorporarán posteriormente sin cambiar la arquitectura.</p></article>
-      <article class="card prose-card"><h2>Documentos del proyecto</h2><div class="project-doc-slots"><div><span>EHL</span><strong>Por cargar</strong></div><div><span>PACCC</span><strong>Por cargar</strong></div><div><span>Crosswalk</span><strong>Por cargar</strong></div><div><span>Matriz maestra</span><strong>Por cargar</strong></div></div><a class="btn" href={`${base}recursos/`}>Ir a recursos →</a></article>
+      <article class="card prose-card">
+        <h2>Reglas del equipo único</h2>
+        <ul>{projectRules.map((rule) => <li>{rule}</li>)}</ul>
+      </article>
+      <article class="card prose-card">
+        <h2>Herramientas comunes</h2>
+        <div class="tags"><span class="tag">Rich Picture</span><span class="tag">Crosswalk EHL–PACCC</span><span class="tag">CATWOE / TAPCID</span><span class="tag">Caja negra</span><span class="tag">Matriz maestra</span><span class="tag">Diagnóstico sistémico</span></div>
+        <p>Las herramientas se incorporan progresivamente y deben contribuir a decisiones justificadas del mismo modelo integrado.</p>
+      </article>
     </section>
 
-    <section class="section"><div class="callout"><strong>Regla de evidencia</strong>Durante el proyecto se distinguirá explícitamente entre información documentada, interpretación del equipo e hipótesis por validar. El repositorio mostrará las versiones vigentes de los instrumentos de trabajo cuando sean cargadas.</div></section>
+    <section class="section grid-2">
+      <article class="card prose-card"><h2>Documentos del proyecto</h2><div class="project-doc-slots"><div><span>EHL</span><strong>Por cargar</strong></div><div><span>PACCC</span><strong>Por cargar</strong></div><div><span>Crosswalk</span><strong>Por cargar</strong></div><div><span>Matriz maestra</span><strong>Por cargar</strong></div></div><a class="btn" href={`${base}recursos/`}>Ir a recursos →</a></article>
+      <article class="card prose-card"><h2>Unidad de trabajo y evidencia</h2><p>El proyecto produce una construcción colectiva integrada. Cuando una evaluación requiere inferencias sobre aprendizaje individual, incorpora evidencia individual específica; un producto colectivo no se interpreta como cinco observaciones independientes.</p></article>
+    </section>
+
+    <section class="section"><div class="callout"><strong>Regla de evidencia</strong>Durante el proyecto se distinguirá explícitamente entre información documentada, información aportada por actores, interpretación del equipo e hipótesis por validar. Las decisiones relevantes deben quedar trazables.</div></section>
   </main>
 </BaseLayout>
