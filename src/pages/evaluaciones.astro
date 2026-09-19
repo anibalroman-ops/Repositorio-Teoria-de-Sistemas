@@ -38,8 +38,9 @@ const total = evaluations.reduce((sum, item) => sum + Number(item.weight.replace
           </div>
           <div class="document-slot">
             <span>Documentación</span>
-            <strong>Por cargar</strong>
+            <strong>{item.code === 'E1' ? 'Disponible' : 'Por cargar'}</strong>
           </div>
+          {item.code === 'E1' && <a class="btn" href={`${base}evaluaciones/e1/`}>Ver instrucciones y rúbrica →</a>}
         </article>
       ))}
     </section>
