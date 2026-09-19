@@ -12,7 +12,7 @@ El sitio funciona como **repositorio académico**, no como LMS.
 
 ## Estado
 
-**v1.5 — E1 definitiva y biblioteca inicial de lecturas.**
+**v1.6 — descargas institucionales de E1 y lecturas iniciales.**
 
 La arquitectura web se conserva y el repositorio alinea calendario, Proyecto Peñaflor y las primeras seis sesiones con el diseño curricular vigente. E1 cuenta con página propia, instrucciones y rúbrica; la biblioteca identifica L1–L3 y las seis lecturas obligatorias de E1, manteniendo los textos protegidos en Campus Virtual. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
 
@@ -116,3 +116,8 @@ La navegación principal sigue la experiencia real del estudiante:
 La progresión formativa visible es:
 
 **Observar → Problematizar → Distinguir → Modelar → Explicar → Diagnosticar → Intervenir**
+
+
+## Acceso institucional a materiales
+
+Las lecturas iniciales, las lecturas obligatorias de E1 y los documentos oficiales de la Evaluación 1 se enlazan individualmente desde Google Drive con permisos de lectura para cuentas institucionales USACH. Los textos protegidos no se copian al repositorio público.
