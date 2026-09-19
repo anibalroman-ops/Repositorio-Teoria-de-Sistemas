@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { e1, e1WhatIsAssessed, e1Milestone, e1Structure, e1Topics, e1Rubric } from '../../data/e1';
+import { siteConfig } from '../../data/site';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout active="evaluaciones" title="E1 · Presentación de Teorías de Sistemas">
+  <main class="shell">
+    <section class="hero compact">
+      <div class="eyebrow">{e1.code} · {e1.weight} de la nota final</div>
+      <h1>{e1.title}</h1>
+      <p class="lead">{e1.objective}</p>
+    </section>
+
+    <section class="grid-3 section semester-stats">
+      <article class="card stat"><strong>13 OCT</strong><span>fecha de presentación</span></article>
+      <article class="card stat"><strong>15 min</strong><span>duración · tolerancia {e1.tolerance}</span></article>
+      <article class="card stat"><strong>21 pts</strong><span>exigencia {e1.requirement}</span></article>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card prose-card">
+        <div class="card-kicker">ASPECTOS FORMALES</div>
+        <h2>Condiciones de la evaluación</h2>
+        <ul>
+          <li>Presentación presencial y en los grupos definidos.</li>
+          <li>La evaluación se realiza el <strong>{e1.date}</strong>, durante el horario de clases.</li>
+          <li>Duración: <strong>{e1.duration}</strong>, con tolerancia operacional de <strong>{e1.tolerance}</strong>.</li>
+          <li><strong>{e1.defense}.</strong></li>
+          <li>La IA generativa puede utilizarse como apoyo del proceso, pero no sustituye la lectura de las fuentes, la comprensión de la teoría, el juicio académico ni la verificación de la información.</li>
+        </ul>
+      </article>
+      <article class="card prose-card">
+        <div class="card-kicker">PROPÓSITO</div>
+        <h2>No es una exposición enciclopédica</h2>
+        <p>El desafío es <strong>reconstruir la lógica de una teoría</strong> y mostrar qué permite comprender cuando se utiliza como lente sistémica.</p>
+        <div class="callout"><strong>Idea central</strong>No basta con definir conceptos: deben mostrar cómo se relacionan y cómo producen una explicación.</div>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>¿Qué se evaluará?</h2><span class="card-kicker">8 EXPECTATIVAS</span></div>
+      <div class="grid-2">
+        {e1WhatIsAssessed.map((item, i) => (
+          <article class="card compact-item">
+            <span>{String(i+1).padStart(2,'0')}</span>
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Hito formativo · 6 de octubre</h2><span class="card-kicker">ANTES DE E1</span></div>
+      <article class="card prose-card">
+        <p>Cada grupo debe llegar a la clase del 6 de octubre con:</p>
+        <ol>{e1Milestone.map((item) => <li>{item}</li>)}</ol>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Tres teorías · dos lecturas base por tema</h2><span class="card-kicker">LECTURA OBLIGATORIA</span></div>
+      <div class="grid-3">
+        {e1Topics.map((topic) => (
+          <article class="card theory-card">
+            <div class="card-kicker">TEMA {topic.number}</div>
+            <h3>{topic.theory}</h3>
+            <ol>{topic.readings.map((reading) => <li>{reading}</li>)}</ol>
+            <a class="btn" href={siteConfig.moodleUrl} target="_blank" rel="noreferrer">Abrir lecturas en Campus Virtual ↗</a>
+          </article>
+        ))}
+      </div>
+      <p class="section-note">Las lecturas base son obligatorias. Pueden complementarse con otras fuentes académicas, técnicas o institucionales; toda afirmación que exceda el material base debe poder rastrearse a una fuente real.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Estructura sugerida para los 15 minutos</h2><span class="card-kicker">ORIENTACIÓN · NO OBLIGATORIA</span></div>
+      <div class="e1-structure">
+        {e1Structure.map(([time,title,desc]) => (
+          <article class="card structure-row">
+            <strong>{time}</strong>
+            <div><h3>{title}</h3><p>{desc}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" id="rubrica">
+      <div class="section-title"><h2>Rúbrica de evaluación</h2><span class="card-kicker">7 CRITERIOS · 0–3 PUNTOS</span></div>
+      <p class="section-note">Niveles: <strong>3 = logrado con solidez · 2 = logrado · 1 = incipiente · 0 = evidencia insuficiente</strong>.</p>
+      <div class="rubric-stack">
+        {e1Rubric.map((criterion) => (
+          <article class="card rubric-card">
+            <div class="rubric-head"><span>{criterion.code}</span><h3>{criterion.title}</h3></div>
+            <div class="rubric-levels">
+              {criterion.levels.map(([level,desc]) => (
+                <div class="rubric-level"><strong>{level}</strong><p>{desc}</p></div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <article class="card prose-card">
+        <h2>Fuentes y trazabilidad</h2>
+        <p>Las lecturas base deben ser reconocibles en la presentación. Citas, datos y afirmaciones deben poder asociarse a fuentes verificables. Si se utilizó IA generativa, su uso debe declararse y el contenido debe haber sido verificado.</p>
+      </article>
+      <article class="card prose-card">
+        <h2>Materiales relacionados</h2>
+        <p>La biblioteca del curso contiene las tres lecturas iniciales y las seis lecturas específicas de E1, organizadas por teoría.</p>
+        <a class="btn" href={`${base}recursos/`}>Ir a Lecturas y Recursos →</a>
+      </article>
+    </section>
+  </main>
+
+  <style>
+    .compact-item{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}
+    .compact-item>span{font-size:.67rem;font-weight:850;letter-spacing:.12em;color:var(--teal);padding-top:5px}
+    .compact-item p{margin:0}
+    .theory-card ol{padding-left:1.15rem}
+    .theory-card li{margin:.65rem 0;line-height:1.5}
+    .section-note{max-width:920px;color:var(--muted);font-size:.82rem}
+    .e1-structure{display:grid;gap:10px}
+    .structure-row{display:grid;grid-template-columns:90px 1fr;gap:20px;align-items:center;padding:16px 20px}
+    .structure-row>strong{font-size:1.1rem;color:var(--teal)}
+    .structure-row h3,.structure-row p{margin:0}
+    .structure-row p{margin-top:4px;color:var(--muted)}
+    .rubric-stack{display:grid;gap:16px}
+    .rubric-card{padding:0;overflow:hidden}
+    .rubric-head{display:flex;gap:12px;align-items:center;padding:18px 20px;background:var(--surface-soft);border-bottom:1px solid var(--line)}
+    .rubric-head span{font-size:.68rem;font-weight:850;letter-spacing:.12em;color:var(--teal)}
+    .rubric-head h3{margin:0}
+    .rubric-levels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+    .rubric-level{padding:18px;border-right:1px solid var(--line)}
+    .rubric-level:last-child{border-right:0}
+    .rubric-level strong{display:block;font-size:.75rem;color:var(--teal-dark);margin-bottom:8px}
+    .rubric-level p{margin:0;font-size:.79rem;color:var(--ink);line-height:1.5}
+    @media (max-width:900px){.rubric-levels{grid-template-columns:1fr 1fr}.rubric-level:nth-child(2){border-right:0}.rubric-level:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+    @media (max-width:620px){.rubric-levels{grid-template-columns:1fr}.rubric-level{border-right:0;border-bottom:1px solid var(--line)}.rubric-level:last-child{border-bottom:0}.structure-row{grid-template-columns:1fr;gap:6px}}
+  </style>
+</BaseLayout>
