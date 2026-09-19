@@ -8,20 +8,17 @@ const moodleResources = (moodleData.items || []).map((item) => ({ ...item, categ
 const allResources = [...resources, ...moodleResources];
 const initialReadings = resources.filter((item) => item.collection === 'Lecturas iniciales');
 const e1Readings = resources.filter((item) => item.collection === 'Evaluación 1');
-const syncedLabel = moodleData.syncedAt
-  ? new Intl.DateTimeFormat('es-CL', { dateStyle:'medium', timeStyle:'short', timeZone:'America/Santiago' }).format(new Date(moodleData.syncedAt))
-  : 'Pendiente de conexión';
 ---
 <BaseLayout active="recursos" title="Recursos · Teoría de Sistemas">
   <main class="shell">
     <section class="hero compact">
       <div class="eyebrow">Recursos</div>
       <h1>Biblioteca del curso</h1>
-      <p class="lead">La biblioteca combina un catálogo académico curado con la sincronización de Campus Virtual. Las lecturas protegidas se describen aquí, pero los archivos permanecen fuera del repositorio público.</p>
+      <p class="lead">Materiales, lecturas e instrumentos organizados por función curricular. Los archivos protegidos permanecen en almacenamiento institucional y no se copian al repositorio público.</p>
     </section>
 
     <section class="section">
-      <div class="callout"><strong>Catálogo + Campus Virtual</strong>Las lecturas obligatorias ya están organizadas por función curricular. Los archivos protegidos permanecen en Campus Virtual; la sincronización automática puede incorporar recursos adicionales sin copiarlos a GitHub. <span class="meta">Última sincronización automática: {syncedLabel}.</span></div>
+      <div class="callout"><strong>Acceso institucional</strong>Las lecturas obligatorias y los documentos de evaluación se abren o descargan desde Google Drive institucional. Si el archivo está protegido, inicia sesión con tu cuenta USACH. El repositorio público contiene solo las fichas y enlaces de acceso.</div>
     </section>
 
     <section class="section">
@@ -42,12 +39,15 @@ const syncedLabel = moodleData.syncedAt
       <div class="section-title"><h2>Lecturas para Evaluación 1</h2><span class="card-kicker">3 TEORÍAS · 6 LECTURAS</span></div>
       <div class="reading-grid">
         {e1Readings.map((item) => (
-          <a class="card reading-card" href={item.href} target="_blank" rel="noreferrer">
-            <div class="card-kicker">{item.type} · E1</div>
+          <article class="card reading-card">
+            <div class="card-kicker">{item.type} · E1 · ACCESO USACH</div>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
-            <span class="reading-link">Abrir en Campus Virtual ↗</span>
-          </a>
+            <div class="reading-card-actions">
+              {item.viewHref && <a href={item.viewHref} target="_blank" rel="noreferrer">Ver ↗</a>}
+              {item.href && <a class="download-link" href={item.href} target="_blank" rel="noreferrer">{item.actionLabel || 'Descargar'} ↓</a>}
+            </div>
+          </article>
         ))}
       </div>
     </section>
@@ -80,7 +80,7 @@ const syncedLabel = moodleData.syncedAt
             <a class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()} href={item.href} target="_blank" rel="noreferrer">
               <div class="resource-icon">{item.type}</div>
               <div><strong>{item.title}</strong>{item.collection && <small class="resource-collection">{item.collection}</small>}<small>{item.description}</small></div>
-              <span class:list={['status', item.status === 'Disponible' && 'available-text']}>{item.status} ↗</span>
+              <span class:list={['status', (item.status === 'Disponible' || item.status === 'Acceso USACH') && 'available-text']}>{item.actionLabel || item.status} ↗</span>
             </a>
           ) : (
             <article class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()}>
@@ -95,8 +95,8 @@ const syncedLabel = moodleData.syncedAt
     </section>
 
     <section class="section grid-2">
-      <article class="card prose-card"><h2>Lecturas protegidas</h2><p>Los PDFs y textos con restricciones de acceso no se publican en GitHub. El repositorio muestra su título y ubicación; al abrirlos, Moodle aplica la autenticación y permisos institucionales.</p></article>
-      <article class="card prose-card"><h2>Flujo de trabajo</h2><p>Subes la lectura una sola vez en la sección <strong>Lecturas</strong> o <strong>Lecturas protegidas</strong> de Moodle. La sincronización actualiza este catálogo automáticamente y no requiere volver a registrar el documento en el repositorio.</p></article>
+      <article class="card prose-card"><h2>Lecturas protegidas</h2><p>Los PDFs académicos con restricciones de acceso no se publican dentro de GitHub. Se mantienen en Google Drive con permiso de lectura para la comunidad USACH y desde aquí se ofrecen enlaces individuales para verlos o descargarlos.</p></article>
+      <article class="card prose-card"><h2>Campus Virtual</h2><p>Campus Virtual sigue siendo el espacio institucional para comunicaciones, entregas y calificaciones. La biblioteca web funciona como puerta de acceso organizada a los materiales del curso.</p></article>
     </section>
 
     <style>
@@ -129,15 +129,29 @@ const syncedLabel = moodleData.syncedAt
         font-size:.82rem;
         line-height:1.45;
       }
-      .reading-link{
-        display:inline-flex;
+      .reading-card-actions{
+        display:flex;
         align-items:center;
+        gap:12px;
+        flex-wrap:wrap;
         margin-top:auto;
         padding-top:20px;
+      }
+      .reading-card-actions a{
         font-size:.75rem;
         font-weight:800;
         color:var(--teal);
         white-space:nowrap;
+      }
+      .reading-card-actions a:hover{text-decoration:underline}
+      .reading-card-actions .download-link{
+        display:inline-flex;
+        align-items:center;
+        padding:7px 10px;
+        border:1px solid #b9d4d1;
+        border-radius:9px;
+        background:#fff;
+        text-decoration:none;
       }
       .resource-collection{display:block!important;margin:.18rem 0;color:var(--teal)!important;font-weight:750}
       @media (max-width:900px){
