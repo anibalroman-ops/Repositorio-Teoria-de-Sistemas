@@ -12,9 +12,9 @@ El sitio funciona como **repositorio académico**, no como LMS.
 
 ## Estado
 
-**v1.4 — alineamiento curricular y primeras sesiones 2026-2.**
+**v1.5 — E1 definitiva y biblioteca inicial de lecturas.**
 
-La arquitectura web se conserva y el repositorio alinea calendario, Proyecto Peñaflor y las primeras seis sesiones con el diseño curricular vigente. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
+La arquitectura web se conserva y el repositorio alinea calendario, Proyecto Peñaflor y las primeras seis sesiones con el diseño curricular vigente. E1 cuenta con página propia, instrucciones y rúbrica; la biblioteca identifica L1–L3 y las seis lecturas obligatorias de E1, manteniendo los textos protegidos en Campus Virtual. La fuente académica de verdad se documenta en `docs/ARQUITECTURA_CURRICULAR_VIGENTE_2026_2.md`.
 
 ## Estructura principal
 
