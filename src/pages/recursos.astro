@@ -26,7 +26,7 @@ const syncedLabel = moodleData.syncedAt
 
     <section class="section">
       <div class="section-title"><h2>Lecturas iniciales del curso</h2><span class="card-kicker">L1–L3</span></div>
-      <div class="grid-3">
+      <div class="reading-grid">
         {initialReadings.map((item) => (
           <a class="card reading-card" href={item.href} target="_blank" rel="noreferrer">
             <div class="card-kicker">{item.type} · CAMPUS VIRTUAL</div>
@@ -40,7 +40,7 @@ const syncedLabel = moodleData.syncedAt
 
     <section class="section">
       <div class="section-title"><h2>Lecturas para Evaluación 1</h2><span class="card-kicker">3 TEORÍAS · 6 LECTURAS</span></div>
-      <div class="grid-3">
+      <div class="reading-grid">
         {e1Readings.map((item) => (
           <a class="card reading-card" href={item.href} target="_blank" rel="noreferrer">
             <div class="card-kicker">{item.type} · E1</div>
@@ -100,11 +100,50 @@ const syncedLabel = moodleData.syncedAt
     </section>
 
     <style>
-      .reading-card{display:flex;flex-direction:column;min-height:220px}
-      .reading-card h3{margin:.45rem 0 .55rem}
-      .reading-card p{margin:0;color:var(--muted);font-size:.82rem}
-      .reading-link{margin-top:auto;padding-top:18px;font-size:.75rem;font-weight:800;color:var(--teal)}
+      .reading-grid{
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:14px;
+        align-items:stretch;
+      }
+      .reading-card{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        height:100%;
+        min-height:250px;
+        padding:20px;
+      }
+      .reading-card .card-kicker{
+        line-height:1.25;
+        margin-bottom:2px;
+      }
+      .reading-card h3{
+        margin:.45rem 0 .55rem;
+        line-height:1.2;
+        min-width:0;
+      }
+      .reading-card p{
+        margin:0;
+        color:var(--muted);
+        font-size:.82rem;
+        line-height:1.45;
+      }
+      .reading-link{
+        display:inline-flex;
+        align-items:center;
+        margin-top:auto;
+        padding-top:20px;
+        font-size:.75rem;
+        font-weight:800;
+        color:var(--teal);
+        white-space:nowrap;
+      }
       .resource-collection{display:block!important;margin:.18rem 0;color:var(--teal)!important;font-weight:750}
+      @media (max-width:900px){
+        .reading-grid{grid-template-columns:1fr}
+        .reading-card{min-height:auto}
+      }
     </style>
 
     <script is:inline>
