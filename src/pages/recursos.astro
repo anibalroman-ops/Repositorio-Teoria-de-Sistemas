@@ -6,6 +6,8 @@ import moodleData from '../data/moodle-resources.json';
 
 const moodleResources = (moodleData.items || []).map((item) => ({ ...item, category: 'lecturas' }));
 const allResources = [...resources, ...moodleResources];
+const initialReadings = resources.filter((item) => item.collection === 'Lecturas iniciales');
+const e1Readings = resources.filter((item) => item.collection === 'Evaluación 1');
 const syncedLabel = moodleData.syncedAt
   ? new Intl.DateTimeFormat('es-CL', { dateStyle:'medium', timeStyle:'short', timeZone:'America/Santiago' }).format(new Date(moodleData.syncedAt))
   : 'Pendiente de conexión';
@@ -15,11 +17,39 @@ const syncedLabel = moodleData.syncedAt
     <section class="hero compact">
       <div class="eyebrow">Recursos</div>
       <h1>Biblioteca del curso</h1>
-      <p class="lead">Los materiales públicos se organizan aquí y las lecturas protegidas de Moodle aparecen automáticamente sin copiar los archivos fuera de Campus Virtual.</p>
+      <p class="lead">La biblioteca combina un catálogo académico curado con la sincronización de Campus Virtual. Las lecturas protegidas se describen aquí, pero los archivos permanecen fuera del repositorio público.</p>
     </section>
 
     <section class="section">
-      <div class="callout"><strong>Lecturas sincronizadas con Moodle</strong>Todo recurso ubicado en una sección de Moodle cuyo nombre contenga “Lectura” o “Bibliografía” se incorpora al catálogo del repositorio. El archivo permanece protegido en Campus Virtual y se abre allí al seleccionarlo. <span class="meta">Última sincronización: {syncedLabel}.</span></div>
+      <div class="callout"><strong>Catálogo + Campus Virtual</strong>Las lecturas obligatorias ya están organizadas por función curricular. Los archivos protegidos permanecen en Campus Virtual; la sincronización automática puede incorporar recursos adicionales sin copiarlos a GitHub. <span class="meta">Última sincronización automática: {syncedLabel}.</span></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Lecturas iniciales del curso</h2><span class="card-kicker">L1–L3</span></div>
+      <div class="grid-3">
+        {initialReadings.map((item) => (
+          <a class="card reading-card" href={item.href} target="_blank" rel="noreferrer">
+            <div class="card-kicker">{item.type} · CAMPUS VIRTUAL</div>
+            <h3>{item.title.replace(/^Lectura \d · /,'')}</h3>
+            <p>{item.description}</p>
+            <span class="reading-link">Abrir en Campus Virtual ↗</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Lecturas para Evaluación 1</h2><span class="card-kicker">3 TEORÍAS · 6 LECTURAS</span></div>
+      <div class="grid-3">
+        {e1Readings.map((item) => (
+          <a class="card reading-card" href={item.href} target="_blank" rel="noreferrer">
+            <div class="card-kicker">{item.type} · E1</div>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <span class="reading-link">Abrir en Campus Virtual ↗</span>
+          </a>
+        ))}
+      </div>
     </section>
 
     <section class="grid-3 section resource-category-grid">
@@ -49,13 +79,13 @@ const syncedLabel = moodleData.syncedAt
           item.href ? (
             <a class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()} href={item.href} target="_blank" rel="noreferrer">
               <div class="resource-icon">{item.type}</div>
-              <div><strong>{item.title}</strong><small>{item.description}</small></div>
+              <div><strong>{item.title}</strong>{item.collection && <small class="resource-collection">{item.collection}</small>}<small>{item.description}</small></div>
               <span class:list={['status', item.status === 'Disponible' && 'available-text']}>{item.status} ↗</span>
             </a>
           ) : (
             <article class="resource-item library-item" data-category={item.category} data-search={`${item.title} ${item.description} ${item.category}`.toLowerCase()}>
               <div class="resource-icon">{item.type}</div>
-              <div><strong>{item.title}</strong><small>{item.description}</small></div>
+              <div><strong>{item.title}</strong>{item.collection && <small class="resource-collection">{item.collection}</small>}<small>{item.description}</small></div>
               <span class="status">{item.status}</span>
             </article>
           )
@@ -68,6 +98,14 @@ const syncedLabel = moodleData.syncedAt
       <article class="card prose-card"><h2>Lecturas protegidas</h2><p>Los PDFs y textos con restricciones de acceso no se publican en GitHub. El repositorio muestra su título y ubicación; al abrirlos, Moodle aplica la autenticación y permisos institucionales.</p></article>
       <article class="card prose-card"><h2>Flujo de trabajo</h2><p>Subes la lectura una sola vez en la sección <strong>Lecturas</strong> o <strong>Lecturas protegidas</strong> de Moodle. La sincronización actualiza este catálogo automáticamente y no requiere volver a registrar el documento en el repositorio.</p></article>
     </section>
+
+    <style>
+      .reading-card{display:flex;flex-direction:column;min-height:220px}
+      .reading-card h3{margin:.45rem 0 .55rem}
+      .reading-card p{margin:0;color:var(--muted);font-size:.82rem}
+      .reading-link{margin-top:auto;padding-top:18px;font-size:.75rem;font-weight:800;color:var(--teal)}
+      .resource-collection{display:block!important;margin:.18rem 0;color:var(--teal)!important;font-weight:750}
+    </style>
 
     <script is:inline>
       (() => {
