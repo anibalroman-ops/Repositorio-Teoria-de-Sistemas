@@ -40,10 +40,10 @@ const base = import.meta.env.BASE_URL;
 
     <section class="section">
       <div class="section-title"><h2>¿Qué se evaluará?</h2><span class="card-kicker">8 EXPECTATIVAS</span></div>
-      <div class="grid-2">
+      <div class="expectation-grid">
         {e1WhatIsAssessed.map((item, i) => (
-          <article class="card compact-item">
-            <span>{String(i+1).padStart(2,'0')}</span>
+          <article class="expectation-item">
+            <span class="expectation-index">{String(i+1).padStart(2,'0')}</span>
             <p>{item}</p>
           </article>
         ))}
@@ -116,25 +116,43 @@ const base = import.meta.env.BASE_URL;
   </main>
 
   <style>
-    .compact-item{
+    .expectation-grid{
       display:grid;
-      grid-template-columns:42px minmax(0,1fr);
-      gap:12px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .expectation-item{
+      display:grid;
+      grid-template-columns:38px minmax(0,1fr);
+      gap:14px;
       align-items:start;
-      min-height:66px;
-      padding:14px 18px;
+      min-height:72px;
+      padding:15px 18px;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow-soft);
+      overflow:visible;
     }
-    .compact-item>span{
-      display:block;
-      min-width:28px;
-      padding-top:3px;
-      font-size:.67rem;
+    .expectation-index{
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:var(--aqua);
+      color:var(--teal-dark);
+      font-size:.66rem;
       font-weight:850;
-      letter-spacing:.08em;
-      color:var(--teal);
-      white-space:nowrap;
+      letter-spacing:.04em;
+      line-height:1;
+      flex:none;
     }
-    .compact-item p{margin:0;min-width:0}
+    .expectation-item p{
+      margin:2px 0 0;
+      min-width:0;
+      line-height:1.45;
+    }
     .theory-card{
       display:flex;
       flex-direction:column;
@@ -169,7 +187,8 @@ const base = import.meta.env.BASE_URL;
       .rubric-level{border-right:0;border-bottom:1px solid var(--line)}
       .rubric-level:last-child{border-bottom:0}
       .structure-row{grid-template-columns:1fr;gap:6px}
-      .compact-item{grid-template-columns:34px minmax(0,1fr);padding:13px 15px}
+      .expectation-grid{grid-template-columns:1fr}
+      .expectation-item{grid-template-columns:36px minmax(0,1fr);padding:14px 15px}
       .theory-card{min-height:auto}
     }
   </style>
