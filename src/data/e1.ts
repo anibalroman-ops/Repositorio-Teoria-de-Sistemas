@@ -13,8 +13,6 @@ export const e1 = {
 };
 
 export const e1Files = {
-  pdfViewHref: 'https://drive.google.com/file/d/1HJYVTnCmv6l8e_2y-e5OFa1RMYjfYZlZ/view',
-  pdfDownloadHref: 'https://drive.google.com/uc?export=download&id=1HJYVTnCmv6l8e_2y-e5OFa1RMYjfYZlZ',
   docxViewHref: 'https://docs.google.com/document/d/1Ou9f5XyvNtsfOlwbPxOl4EcoqMhY0Kf5/edit?usp=drivesdk',
   docxDownloadHref: 'https://drive.google.com/uc?export=download&id=1Ou9f5XyvNtsfOlwbPxOl4EcoqMhY0Kf5',
 };
