@@ -12,6 +12,13 @@ export const e1 = {
   objective: 'Presentar de manera clara y fundamentada una teoría de sistemas asignada, demostrando comprensión conceptual, rigurosidad teórica, aplicación al ámbito de la ingeniería ambiental y habilidades de comunicación efectiva.',
 };
 
+export const e1Files = {
+  pdfViewHref: 'https://drive.google.com/file/d/1HJYVTnCmv6l8e_2y-e5OFa1RMYjfYZlZ/view',
+  pdfDownloadHref: 'https://drive.google.com/uc?export=download&id=1HJYVTnCmv6l8e_2y-e5OFa1RMYjfYZlZ',
+  docxViewHref: 'https://docs.google.com/document/d/1Ou9f5XyvNtsfOlwbPxOl4EcoqMhY0Kf5/edit?usp=drivesdk',
+  docxDownloadHref: 'https://drive.google.com/uc?export=download&id=1Ou9f5XyvNtsfOlwbPxOl4EcoqMhY0Kf5',
+};
+
 export const e1WhatIsAssessed = [
   'Explicar el problema histórico o conceptual que motivó el desarrollo de la teoría.',
   'Identificar a sus autores centrales y situar brevemente el contexto de surgimiento.',
@@ -43,24 +50,54 @@ export const e1Topics = [
     number: 1,
     theory: 'Dinámica de Sistemas',
     readings: [
-      'Ford, A. (1999). Modeling the Environment: An Introduction to System Dynamics Models of Environmental Systems. Island Press.',
-      'Costanza, R., & Ruth, M. (1998). Using Dynamic Modeling to Scope Environmental Problems and Build Consensus. Environmental Management, 22(2), 183–195.',
+      {
+        citation: 'Ford, A. (1999). Modeling the Environment: An Introduction to System Dynamics Models of Environmental Systems. Island Press.',
+        fileId: '1fadw0Ru0q17U9FryWudQqRka7vUayJ69',
+        viewHref: 'https://drive.google.com/file/d/1fadw0Ru0q17U9FryWudQqRka7vUayJ69/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=1fadw0Ru0q17U9FryWudQqRka7vUayJ69',
+      },
+      {
+        citation: 'Costanza, R., & Ruth, M. (1998). Using Dynamic Modeling to Scope Environmental Problems and Build Consensus. Environmental Management, 22(2), 183–195.',
+        fileId: '1nIfRNTciIThLz-1iLuJTvl4atFkJZJSR',
+        viewHref: 'https://drive.google.com/file/d/1nIfRNTciIThLz-1iLuJTvl4atFkJZJSR/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=1nIfRNTciIThLz-1iLuJTvl4atFkJZJSR',
+      },
     ],
   },
   {
     number: 2,
     theory: 'Teoría de la Información',
     readings: [
-      'Stone, J. V. (2022). Information Theory: A Tutorial Introduction (2nd ed.). Sebtel Press.',
-      'Ulanowicz, R. E., Goerner, S. J., Lietaer, B., & Gomez, R. (2009). Quantifying Sustainability: Resilience, Efficiency and the Return of Information Theory. Ecological Complexity, 6, 27–36.',
+      {
+        citation: 'Stone, J. V. (2022). Information Theory: A Tutorial Introduction (2nd ed.). Sebtel Press.',
+        fileId: '19u6Wa3NX823ZtTV8r58Cj_lgFM0zHTq3',
+        viewHref: 'https://drive.google.com/file/d/19u6Wa3NX823ZtTV8r58Cj_lgFM0zHTq3/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=19u6Wa3NX823ZtTV8r58Cj_lgFM0zHTq3',
+      },
+      {
+        citation: 'Ulanowicz, R. E., Goerner, S. J., Lietaer, B., & Gomez, R. (2009). Quantifying Sustainability: Resilience, Efficiency and the Return of Information Theory. Ecological Complexity, 6, 27–36.',
+        fileId: '1-Lg_Abt6EgC2Wrk8oKcL13VouCFYMr2C',
+        viewHref: 'https://drive.google.com/file/d/1-Lg_Abt6EgC2Wrk8oKcL13VouCFYMr2C/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=1-Lg_Abt6EgC2Wrk8oKcL13VouCFYMr2C',
+      },
     ],
   },
   {
     number: 3,
     theory: 'Cibernética',
     readings: [
-      'Ashby, W. R. (1956). An Introduction to Cybernetics. Chapman & Hall.',
-      'Patten, B. C., & Odum, E. P. (1981). The Cybernetic Nature of Ecosystems. The American Naturalist, 118, 886–895.',
+      {
+        citation: 'Ashby, W. R. (1956). An Introduction to Cybernetics. Chapman & Hall.',
+        fileId: '1CxSDYp1anOTGEAQni1AhUI6bcxU8XLE0',
+        viewHref: 'https://drive.google.com/file/d/1CxSDYp1anOTGEAQni1AhUI6bcxU8XLE0/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=1CxSDYp1anOTGEAQni1AhUI6bcxU8XLE0',
+      },
+      {
+        citation: 'Patten, B. C., & Odum, E. P. (1981). The Cybernetic Nature of Ecosystems. The American Naturalist, 118, 886–895.',
+        fileId: '1emFkoBGmP8zaU3mb5nCeNA81s_AD0B7a',
+        viewHref: 'https://drive.google.com/file/d/1emFkoBGmP8zaU3mb5nCeNA81s_AD0B7a/view',
+        downloadHref: 'https://drive.google.com/uc?export=download&id=1emFkoBGmP8zaU3mb5nCeNA81s_AD0B7a',
+      },
     ],
   },
 ];
