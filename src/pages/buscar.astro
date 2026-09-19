@@ -7,7 +7,7 @@ const indexItems = [
   { category:'Curso', title:'Resultado de aprendizaje y arquitectura del curso', desc:'Propósito, macrocapacidades, metodología y progresión del semestre.', href:`${base}curso/`, terms:'curso resultado aprendizaje macrocapacidades metodologia progresion' },
   { category:'Proyecto', title:'Municipalidad de Peñaflor', desc:'Desafío EHL–PACCC, equipo único, roles rotativos, frentes analíticos e hitos H0–H3.', href:`${base}proyecto-penaflor/`, terms:'penaflor ehl paccc equipo unico roles frentes h0 h1 h2 h3 hoja ruta municipio' },
   ...sessions.map((s) => ({ category: s.kind === 'evaluacion' ? 'Evaluación' : s.kind === 'hito' ? 'Hito' : 'Clase', title:`${s.label} · ${s.title}`, desc:s.detail, href:s.href ? `${base}${s.href}` : `${base}clases/`, terms:`${s.label} ${s.title} ${s.detail} ${s.kind}` })),
-  ...evaluations.map((e) => ({ category:'Evaluación', title:`${e.code} · ${e.title}`, desc:`${e.weight} · ${e.mode} · ${e.purpose}`, href:`${base}evaluaciones/#${e.code.toLowerCase()}`, terms:`${e.code} ${e.title} ${e.purpose} ${e.evidence}` })),
+  ...evaluations.map((e) => ({ category:'Evaluación', title:`${e.code} · ${e.title}`, desc:`${e.weight} · ${e.mode} · ${e.purpose}`, href:e.code === 'E1' ? `${base}evaluaciones/e1/` : `${base}evaluaciones/#${e.code.toLowerCase()}`, terms:`${e.code} ${e.title} ${e.purpose} ${e.evidence}` })),
   ...resources.map((r) => ({ category:'Recurso', title:r.title, desc:r.description, href:`${base}recursos/`, terms:`${r.title} ${r.description} ${r.category} ${r.type}` })),
 ];
 ---
