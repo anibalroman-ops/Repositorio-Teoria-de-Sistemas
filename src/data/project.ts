@@ -64,7 +64,7 @@ export const analyticFronts = [
 ];
 
 export const projectStages = [
-  { code:'H0', date:'24 SEP', title:'Escuchar', desc:'Recibir el desafío, distinguir perspectivas y registrar qué sabemos, qué interpretamos y qué necesitamos comprender.' },
+  { code:'H0', date:'30 SEP', title:'Escuchar', desc:'Recibir el desafío directamente de la Municipalidad, contrastar preguntas preparadas y registrar evidencia, perspectivas, ejemplos e incertidumbres.' },
   { code:'EX', date:'29 SEP–08 OCT', title:'Explorar', desc:'Aprender a problematizar y transferir esas herramientas al desafío real sin cerrar prematuramente el problema.' },
   { code:'DOC', date:'29 OCT–10 NOV', title:'Construir evidencia', desc:'Analizar EHL/PACCC, actores, afirmaciones, fuentes, incertidumbres y primeras representaciones integradas.' },
   { code:'H1', date:'12 NOV', title:'Contrastar la problematización', desc:'Poner a prueba situación-problema, perspectivas, sistema preliminar y preguntas con la contraparte.' },
