@@ -27,8 +27,9 @@ export const learningRoute = [
 
 export const sessions: Session[] = [
   { id:'c01', date:'2026-09-22', label:'22 SEP', day:'Martes', time:'15:20–18:15', title:'El observador y la construcción de sistemas', detail:'Fenómeno · observador · sistema · diagnóstico inicial · presentación de E1 y del desafío Peñaflor.', status:'Disponible', kind:'clase', href:'clases/22-septiembre/', month:'SEP' },
-  { id:'c02', date:'2026-09-24', label:'24 SEP', day:'Jueves', time:'15:20–16:45', title:'H0 · Escuchar el desafío y observar múltiples perspectivas', detail:'EHL/PACCC · contraparte · sabemos / interpretamos / necesitamos comprender · incertidumbres iniciales.', status:'Hito', kind:'hito', href:'clases/24-septiembre/', month:'SEP' },
-  { id:'c03', date:'2026-09-29', label:'29 SEP', day:'Martes', time:'15:20–18:15', title:'Pensamiento sistémico y situaciones problemáticas', detail:'Checkland · complejidad · movimiento de sistemas · rich picture.', status:'Disponible', kind:'clase', href:'clases/29-septiembre/', month:'SEP' },
+  { id:'c02', date:'2026-09-24', label:'24 SEP', day:'Jueves', time:'15:20–16:45', title:'Preparar la escucha: EHL, PACCC, evidencia y preguntas', detail:'Lectura guiada EHL/PACCC · EV / INT / HIP / ? · banco inicial de preguntas para H0.', status:'Disponible', kind:'clase', href:'clases/24-septiembre/', month:'SEP' },
+  { id:'c03', date:'2026-09-29', label:'29 SEP', day:'Martes', time:'15:20–18:15', title:'Pensamiento sistémico y situaciones problemáticas', detail:'Checkland · complejidad · rich picture · transferencia a Peñaflor · preparación final de H0.', status:'Disponible', kind:'clase', href:'clases/29-septiembre/', month:'SEP' },
+  { id:'h0', date:'2026-09-30', label:'30 SEP', day:'Miércoles', time:'11:30 · horario extraordinario', title:'H0 · Encuentro con Municipalidad de Peñaflor', detail:'Presentación del desafío · indagación · ejemplos concretos · actores · procesos · incertidumbres · acuerdos y pendientes.', status:'Hito', kind:'hito', href:'proyecto-penaflor/', month:'SEP' },
   { id:'c04', date:'2026-10-01', label:'01 OCT', day:'Jueves', time:'15:20–16:45', title:'Propiedades sistémicas y sistemas relevantes', detail:'Emergencia · jerarquía · información · control · definición raíz.', status:'Disponible', kind:'clase', href:'clases/01-octubre/', month:'OCT' },
   { id:'c05', date:'2026-10-06', label:'06 OCT', day:'Martes', time:'15:20–18:15', title:'Teorías de sistemas aplicadas a problemáticas socioambientales', detail:'Cibernética · teoría de la información · dinámica de sistemas · aplicación al desafío Peñaflor.', status:'Disponible', kind:'clase', href:'clases/06-octubre/', month:'OCT' },
   { id:'c06', date:'2026-10-08', label:'08 OCT', day:'Jueves', time:'15:20–16:45', title:'Delimitación colectiva del desafío Peñaflor y acuerdos de trabajo', detail:'Rich picture común · evidencia/interpretación · preguntas prioritarias · formalización del equipo único.', status:'Disponible', kind:'clase', href:'clases/08-octubre/', month:'OCT' },
@@ -72,7 +73,7 @@ export const evaluations = [
 ];
 
 export const projectMilestones = [
-  { code:'H0', date:'24 SEP', title:'Comprender el desafío', desc:'Escuchar, distinguir perspectivas y registrar incertidumbres sin cerrar prematuramente el problema.' },
+  { code:'H0', date:'30 SEP', title:'Comprender el desafío', desc:'Escuchar a la Municipalidad, contrastar preguntas preparadas y registrar evidencia, perspectivas e incertidumbres sin cerrar prematuramente el problema.' },
   { code:'H1', date:'12 NOV', title:'Contrastar la problematización', desc:'Revisar situación-problema, actores, sistema pertinente y primeras hipótesis con la contraparte.' },
   { code:'H2', date:'17 DIC', title:'Contrastar el modelo', desc:'Poner a prueba transformación, arquitectura, información, regulación, dinámica y evidencia faltante.' },
   { code:'H3', date:'12 ENE', title:'Presentar la hoja de ruta', desc:'Integrar diagnóstico, prioridades, secuencia, responsables, indicadores y recomendaciones.' },
